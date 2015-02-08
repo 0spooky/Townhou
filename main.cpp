@@ -18,6 +18,8 @@ int main()
     //testing
     srand (time(NULL));
 
+    const static
+
 
 
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
@@ -35,8 +37,6 @@ int main()
             rightpressed = false,                                       //
             uppressed    = false,                                       //
             downpressed  = false;                                       //
-
-    int zoom=1;
 
     //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
 
@@ -63,10 +63,6 @@ int main()
                     uppressed = true;
                 if (event.key.code == sf::Keyboard::Down)
                     downpressed = true;
-                if (event.key.code == sf::Keyboard::PageDown && zoom != 1)
-                    zoom--;
-                if (event.key.code == sf::Keyboard::PageUp)
-                    zoom++;
             }
             if (event.type == sf::Event::KeyReleased)
             {
