@@ -124,7 +124,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
     flat_iso_tile.setOutlineThickness(1);
     flat_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
-    sf::ConvexShape _0_1_1_1_iso_tile(4);
+    sf::ConvexShape _0_1_1_1_iso_tile(4);                   //       _X_X_X_X = _Left_Bottom_Right_Top
     _0_1_1_1_iso_tile.setPoint(0, sf::Vector2f(0.f, 16.f));
     _0_1_1_1_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f));
     _0_1_1_1_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f));
