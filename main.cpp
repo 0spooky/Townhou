@@ -18,7 +18,8 @@ int main()
     //testing
     srand (time(NULL));
 
-    const static
+    const int XWINDOWDIMENSION = 1920;
+    const int YWINDOWDIMENSION = 960;
 
 
 
@@ -27,7 +28,7 @@ int main()
     buildtilemap(basetile_data, 512, 512);                              //debug tilemap
 
     //sf::RenderWindow window(sf::VideoMode(1280, 960), "Townhou", sf::Style::Close);       //For when people with 4:3 monitors want a distribution
-    sf::RenderWindow window(sf::VideoMode(1920, 960), "Townhou", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close);
     window.setFramerateLimit(120);
 
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
