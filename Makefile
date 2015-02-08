@@ -1,16 +1,16 @@
+LIBS=-lsfml-graphics -lsfml-window -lsfml-system
+CXX := g++
+
 all: Townhou
 
 Townhou: main.o basetile.o Noisegen.o
-	g++ main.o basetile.o Noisegen.o -o Townhou -lsfml-graphics -lsfml-window -lsfml-system
+	$(CXX) main.o basetile.o Noisegen.o -o Townhou $(LIBS)
 
-main.o: main.cpp
-	g++ -c main.cpp
+%.o: %.cpp
+	$(CXX) -c $< -o $@
 
-basetile.o: basetile.cpp
-	g++ -c basetile.cpp
-
-Noisegen.o: Noisegen.cpp
-	g++ -c Noisegen.cpp
+%.o: %.hpp
+	$(CXX) -c $< -o $@
 
 clean:
 	rm *o Townhou
