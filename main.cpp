@@ -18,9 +18,6 @@ int main()
     //testing
     srand (time(NULL));
 
-
-
-
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
     //buildtilemap(basetile_data, 512, 512);                            //Currently working with 513 x 513 map
     buildtilemap(basetile_data, 512, 512);                              //debug tilemap
@@ -36,7 +33,6 @@ int main()
             rightpressed = false,                                       //
             uppressed    = false,                                       //
             downpressed  = false;                                       //
-
 
     //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
 
@@ -129,6 +125,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
     _0_1_1_1_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f));
     _0_1_1_1_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f));
     _0_1_1_1_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f));
+    _0_1_1_1_iso_tile.setOrigin(sf::Vector2f(0.f, 16.f));
     _0_1_1_1_iso_tile.setOutlineThickness(1);
     _0_1_1_1_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
@@ -226,7 +223,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight == basetile_data[i][j].botheight))
             {
                 _0_1_1_1_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                _0_1_1_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].botheight));        //Set the new position of the template tile offset by the viewpoint
+                _0_1_1_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_0_1_1_1_iso_tile);
             }
