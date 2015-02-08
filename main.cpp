@@ -18,6 +18,8 @@ int main()
     //testing
     srand (time(NULL));
 
+
+
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
     //buildtilemap(basetile_data, 512, 512);                            //Currently working with 513 x 513 map
     buildtilemap(basetile_data, 512, 512);                              //debug tilemap
@@ -33,6 +35,8 @@ int main()
             rightpressed = false,                                       //
             uppressed    = false,                                       //
             downpressed  = false;                                       //
+
+    int zoom=1;
 
     //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
 
@@ -59,6 +63,10 @@ int main()
                     uppressed = true;
                 if (event.key.code == sf::Keyboard::Down)
                     downpressed = true;
+                if (event.key.code == sf::Keyboard::PageDown && zoom != 1)
+                    zoom--;
+                if (event.key.code == sf::Keyboard::PageUp)
+                    zoom++;
             }
             if (event.type == sf::Event::KeyReleased)
             {
@@ -112,20 +120,19 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
 //
 void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const sf::Vector2f &viewpoint)
 {
-    sf::ConvexShape flat_iso_tile(4);                       //      This code is to draw an openGL SFML isometric flat square.
-    flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));      //      If you use sprites, remove it eventually
-    flat_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f));    //      For some reason, I have these all drawing counterclockwise
-    flat_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f));     //         even though all measurements are clockwise.  This should be fixed
-    flat_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f));   //
+    sf::ConvexShape flat_iso_tile(4); // This code is to draw an openGL SFML isometric flat square.
+    flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f)); // If you use sprites, remove it eventually
+    flat_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f)); // For some reason, I have these all drawing counterclockwise
+    flat_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f)); // even though all measurements are clockwise. This should be fixed
+    flat_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f)); //
     flat_iso_tile.setOutlineThickness(1);
     flat_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
-    sf::ConvexShape _0_1_1_1_iso_tile(4);                   //       _X_X_X_X = _Left_Bottom_Right_Top
-    _0_1_1_1_iso_tile.setPoint(0, sf::Vector2f(0.f, 16.f));
-    _0_1_1_1_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f));
-    _0_1_1_1_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f));
-    _0_1_1_1_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f));
-    _0_1_1_1_iso_tile.setOrigin(sf::Vector2f(0.f, 16.f));
+    sf::ConvexShape _0_1_1_1_iso_tile(4); // _X_X_X_X = _Left_Bottom_Right_Top
+    _0_1_1_1_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));
+    _0_1_1_1_iso_tile.setPoint(1, sf::Vector2f(32.f, 0.f));
+    _0_1_1_1_iso_tile.setPoint(2, sf::Vector2f(64.f, -16.f));
+    _0_1_1_1_iso_tile.setPoint(3, sf::Vector2f(32.f, -32.f));
     _0_1_1_1_iso_tile.setOutlineThickness(1);
     _0_1_1_1_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
