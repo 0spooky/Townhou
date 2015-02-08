@@ -1,0 +1,45 @@
+ID: 000001
+
+    //  for loop:
+    //	Purpose : Iterate through each level of the vector of vectors of basetiles, accounting for whether they will be onscreen (x-component)
+    //
+    //  Start off unsigned int i at whichever is higher: 0                                                      (the lowest allowed vector position)
+    //                                                   (viewpoint.x/64 - viewpoint.y/32) - 32                 (the y solution to the inverse matrix
+    //                                                                                                                                            [x] [ 1/64  1/32 ]
+    //                                                                                                                                            [y] [ 1/64 -1/32 ]
+    //                                                                                                                       of the definition matrix
+    //                                                                                                                                            [x] [ 32      32 ]
+    //                                                                                                                                            [y] [ 16     -16 ]
+    //                                                                                                          with 2 subtracted.  Gives 2 levels off screen in the
+    //                                                                                                          top left direction.
+    //                                                                                                          (From top left corner; likely around 32 around middle)
+    //  Increments until unsigned int i is greater than whichever is lower:
+    //                                                   the vector size (xsize)
+    //                                                   ((viewpoint.x/64 + viewpoint.y/32) + 1920/64) + 32     (the x solution to the inverse definition matrix (see above)
+    //                                                                                                          with the screen width (1920) divided by the tile width (64) added
+    //                                                                                                          with 32 added.  Gives 2 levels off screen in the bottom right direction.
+    //                                                                                                          (From bottom right corner; likely around 32 around middle))
+    //
+
+ID: 000002
+
+    //  for loop:
+    //	Purpose : Iterate through each level of an individual vector of basetiles, accounting for whether they will be onscreen (y-component)
+    //
+    //  Start off unsigned int i at whichever is higher: 0                                                      (the lowest allowed vector position)
+    //                                                   (viewpoint.x/64 - viewpoint.y/32) - 32                 (the y solution to the inverse matrix
+    //                                                                                                                                            [x] [ 1/64  1/32 ]
+    //                                                                                                                                            [y] [ 1/64 -1/32 ]
+    //                                                                                                                       of the definition matrix
+    //                                                                                                                                            [x] [ 32      32 ]
+    //                                                                                                                                            [y] [ 16     -16 ]
+    //                                                                                                          with 32 subtracted.  Gives some levels off screen in the
+    //                                                                                                          bottom left direction.
+    //                                                                                                          (From bottom left corner; likely over 32 around middle))
+    //  Increments until unsigned int i is greater than whichever is lower:
+    //                                                   the vector size (xsize)
+    //                                                   (viewpoint.x/64 - viewpoint.y/32) + 960/32 + 2         (the y solution to the inverse definition matrix (see above)
+    //                                                                                                          with the screen height (960) divided by the tile height (32) added
+    //                                                                                                          with 2 added.  Gives 2 levels off screen in the top right direction.
+    //                                                                                                          (From top right corner; likely around 32 around middle))
+    //
