@@ -23,7 +23,7 @@ int main()
 
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
     //buildtilemap(basetile_data, 512, 512);                            //Currently working with 513 x 513 map
-    buildtilemap(basetile_data, 120, 120);                              //debug tilemap
+    buildtilemap(basetile_data, 512, 512);                              //debug tilemap
 
     //sf::RenderWindow window(sf::VideoMode(1280, 960), "Townhou", sf::Style::Close);       //For when people with 4:3 monitors want a distribution
     sf::RenderWindow window(sf::VideoMode(1920, 960), "Townhou", sf::Style::Close);
