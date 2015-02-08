@@ -32,10 +32,10 @@ int main()
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
     sf::Vector2f viewpoint(0.f,-540.f);                                    //debug viewpoint
 
-    bool    leftpressed = false,                                        //These are used for seamless scrolling
-            rightpressed= false,                                        //
-            uppressed   = false,                                        //
-            downpressed = false;                                        //
+    bool    leftpressed  = false,                                       //These are used for seamless scrolling
+            rightpressed = false,                                       //
+            uppressed    = false,                                       //
+            downpressed  = false;                                       //
 
 
     //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
@@ -56,40 +56,24 @@ int main()
             if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Left)
-                {
                     leftpressed = true;
-                }
                 if (event.key.code == sf::Keyboard::Right)
-                {
                     rightpressed = true;
-                }
                 if (event.key.code == sf::Keyboard::Up)
-                {
                     uppressed = true;
-                }
                 if (event.key.code == sf::Keyboard::Down)
-                {
                     downpressed = true;
-                }
             }
             if (event.type == sf::Event::KeyReleased)
             {
                 if (event.key.code == sf::Keyboard::Left)
-                {
                     leftpressed = false;
-                }
                 if (event.key.code == sf::Keyboard::Right)
-                {
                     rightpressed = false;
-                }
                 if (event.key.code == sf::Keyboard::Up)
-                {
                     uppressed = false;
-                }
                 if (event.key.code == sf::Keyboard::Down)
-                {
                     downpressed = false;
-                }
             }
         }
 
