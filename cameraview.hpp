@@ -11,6 +11,9 @@ public:
 
     cameraview();
     cameraview(int x, int y);
+
+    int getX() const {return viewpoint.x;}
+    int getY() const {return viewpoint.y;}
     void changeview(bool up, bool down, bool left, bool right);
 };
 
