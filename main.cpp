@@ -22,8 +22,6 @@ int main()
     const int XWINDOWDIMENSION = 1920;
     const int YWINDOWDIMENSION = 960;
 
-
-
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
     //buildtilemap(basetile_data, 512, 512);                            //Currently working with 513 x 513 map
     buildtilemap(basetile_data, 512, 512);                              //debug tilemap
@@ -34,7 +32,7 @@ int main()
 
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
     sf::Vector2f viewpoint(0.f,-540.f);                                 //debug viewpoint
-    cameraview maincamera(0,-540);
+    cameraview maincamera(0,-YWINDOWDIMENSION/2);
 
     bool    leftpressed  = false,                                       //These are used for seamless scrolling
             rightpressed = false,                                       //
