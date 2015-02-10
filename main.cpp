@@ -113,7 +113,6 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
 }
 
 //A function to draw the entirety of a vector of vectors of basetiles on a window given a viewpoint
-//  TODO: Add in heights
 //
 void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const sf::Vector2f &viewpoint)
 {
