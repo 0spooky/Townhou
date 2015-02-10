@@ -186,9 +186,6 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
     _1_1_0_0_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
 
-
-
-
     int x1, y1;                                             //      used for algebraic purposes
 
     float   xsize = basetile_data.size(),                   //      The arbitrary "x" size of the game map
