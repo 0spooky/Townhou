@@ -6,6 +6,7 @@
 #include <time.h> //TESTING
 #include "Noisegen.hpp"
 #include "basetile.hpp"
+#include "cameraview.hpp"
 
 void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsigned short xsize, unsigned short ysize);                      //Initialises a "matrix" of basetiles
 
@@ -32,7 +33,8 @@ int main()
     window.setFramerateLimit(120);
 
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
-    sf::Vector2f viewpoint(0.f,-540.f);                                    //debug viewpoint
+    sf::Vector2f viewpoint(0.f,-540.f);                                 //debug viewpoint
+    cameraview maincamera(0,-540);
 
     bool    leftpressed  = false,                                       //These are used for seamless scrolling
             rightpressed = false,                                       //
@@ -40,12 +42,6 @@ int main()
             downpressed  = false;                                       //
 
     //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
-
-
-//    std::cout << basetile_data[0][7].leftheight << std::endl;           //debug
-//    std::cout << basetile_data[0][7].topheight << std::endl;
-//    std::cout << basetile_data[0][7].rightheight << std::endl;
-//    std::cout << basetile_data[0][7].botheight << std::endl;
 
     while (window.isOpen())
     {
@@ -78,6 +74,8 @@ int main()
             }
         }
 
+        maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);
+
         changeviewpoint(viewpoint, leftpressed, rightpressed, uppressed, downpressed);
 
         window.clear();
@@ -101,7 +99,6 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
     {
         for(unsigned short j = 0; j < ysize; j++)                       //Tick up
         {
-            //temporary_y_vector.push_back(basetile(i,j,rand() % 512,0));
             temporary_y_vector.push_back(basetile(16 * floor(testingnoise.GetHeight(i,j) + 16),         //basetile(left, top, right, bottom)
                                                   16 * floor(testingnoise.GetHeight(i+1,j) + 16),
                                                   16 * floor(testingnoise.GetHeight(i+1,j+1) + 16),
@@ -116,15 +113,15 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
 //
 void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const sf::Vector2f &viewpoint)
 {
-    sf::ConvexShape flat_iso_tile(4); // This code is to draw an openGL SFML isometric flat square.
-    flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f)); // If you use sprites, remove it eventually
-    flat_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f)); // For some reason, I have these all drawing counterclockwise
-    flat_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f)); // even though all measurements are clockwise. This should be fixed
-    flat_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f)); //
+    sf::ConvexShape flat_iso_tile(4);                                   // This code is to draw an openGL SFML isometric flat square.
+    flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));                  // If you use sprites, remove it eventually
+    flat_iso_tile.setPoint(1, sf::Vector2f(32.f, 16.f));                // For some reason, I have these all drawing counterclockwise
+    flat_iso_tile.setPoint(2, sf::Vector2f(64.f, 0.f));                 // even though all measurements are clockwise. This should be fixed
+    flat_iso_tile.setPoint(3, sf::Vector2f(32.f, -16.f));               //
     flat_iso_tile.setOutlineThickness(1);
     flat_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
-    sf::ConvexShape _0_1_1_1_iso_tile(4); // _X_X_X_X = _Left_Bottom_Right_Top
+    sf::ConvexShape _0_1_1_1_iso_tile(4);                               // _X_X_X_X = _Left_Bottom_Right_Top
     _0_1_1_1_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));
     _0_1_1_1_iso_tile.setPoint(1, sf::Vector2f(32.f, 0.f));
     _0_1_1_1_iso_tile.setPoint(2, sf::Vector2f(64.f, -16.f));
