@@ -10,9 +10,7 @@
 
 void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsigned short xsize, unsigned short ysize);                      //Initialises a "matrix" of basetiles
 
-void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const sf::Vector2f &viewpoint);    //Draws a map of basetiles given the data, the window, and viewpoint
-
-void changeviewpoint(sf::Vector2f &viewpoint, bool leftpressed, bool rightpressed, bool uppressed, bool downpressed);                       //Pans the screen based off which keys are pressed
+void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera);     //Draws a map of basetiles given the data, the window, and viewpoint
 
 int main()
 {
@@ -74,10 +72,8 @@ int main()
 
         maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);
 
-        changeviewpoint(viewpoint, leftpressed, rightpressed, uppressed, downpressed);
-
         window.clear();
-        drawtilemap(basetile_data, window, viewpoint);
+        drawtilemap(basetile_data, window, maincamera);
         window.display();
     }
 
@@ -109,7 +105,7 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
 
 //A function to draw the entirety of a vector of vectors of basetiles on a window given a viewpoint
 //
-void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const sf::Vector2f &viewpoint)
+void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera)
 {
     sf::ConvexShape flat_iso_tile(4);                                   // This code is to draw an openGL SFML isometric flat square.
     flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));                  // If you use sprites, remove it eventually
@@ -186,20 +182,20 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
 
     int x1, y1;                                             //      used for algebraic purposes
 
-    float   xsize = basetile_data.size(),                   //      The arbitrary "x" size of the game map
+    int   xsize = basetile_data.size(),                     //      The arbitrary "x" size of the game map
             ysize;                                          //      The arbitrary "y" size of the game map;  In theory this supports non-homologous lengths, but that'll never get implemented?
                                                             //      Not worth making width variable, so why make height variable?
                                                             //      Will probably take this out eventually for optimization or something
 
 
     // see (COMMENT ID: 000001) for information about this loop
-    for(unsigned int i = std::max((viewpoint.x/64 - viewpoint.y/32) - 48, 0.f); i < std::min(xsize, ((viewpoint.x/64 - viewpoint.y/32) + 1920/64) + 0); i++)
+    for(unsigned int i = std::max((maincamera.getX()/64 - maincamera.getY()/32) - 48, 0); i < std::min(xsize, ((maincamera.getX()/64 - maincamera.getY()/32) + 1920/64) + 0); i++)
     {
         ysize = basetile_data[i].size();                    //      The arbitrary "y" size of the fame map;  See above variable creation
 
 
     // see (COMMENT ID: 000002) for information about this loop
-        for(unsigned int j = std::max((viewpoint.x/64 + viewpoint.y/32) + 0, 0.f); j < std::min(ysize, ((viewpoint.x/64 + viewpoint.y/32) + 960/32 + 48)); j++)
+        for(unsigned int j = std::max((maincamera.getX()/64 + maincamera.getY()/32) + 0, 0); j < std::min(ysize, ((maincamera.getX()/64 + maincamera.getY()/32) + 960/32 + 48)); j++)
         {
             x1 = 32 * (i + j);      //the x and y solutions to the transformation matrix [x] [ 32      32 ]
             y1 = 16 * (-i + j);     //                                                   [y] [-16      16 ]
@@ -209,7 +205,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                (basetile_data[i][j].rightheight == basetile_data[i][j].botheight))
             {
                 flat_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                flat_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                flat_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(flat_iso_tile);
             }
@@ -218,7 +214,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight == basetile_data[i][j].botheight))
             {
                 _0_1_1_1_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                _0_1_1_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _0_1_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_0_1_1_1_iso_tile);
             }
@@ -227,7 +223,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight == basetile_data[i][j].botheight))
             {
                 _1_0_1_1_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                _1_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _1_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_1_0_1_1_iso_tile);
             }
@@ -236,7 +232,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight < basetile_data[i][j].botheight))
             {
                 _1_1_0_1_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                _1_1_0_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _1_1_0_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_1_1_0_1_iso_tile);
             }
@@ -245,7 +241,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight > basetile_data[i][j].botheight))
             {
                 _1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
-                _1_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _1_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_1_1_1_0_iso_tile);
             }
@@ -254,7 +250,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight > basetile_data[i][j].botheight))
             {
                 _0_1_1_0_iso_tile.setFillColor(sf::Color(basetile_data[i][j].topheight/2.f, 0, 0, 255));
-                _0_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _0_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_0_1_1_0_iso_tile);
             }
@@ -263,7 +259,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight == basetile_data[i][j].botheight))
             {
                 _0_0_1_1_iso_tile.setFillColor(sf::Color(basetile_data[i][j].topheight/2.f, 0, 0, 255));
-                _0_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _0_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_0_0_1_1_iso_tile);
             }
@@ -272,7 +268,7 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
                      (basetile_data[i][j].rightheight < basetile_data[i][j].botheight))
             {
                 _1_0_0_1_iso_tile.setFillColor(sf::Color(basetile_data[i][j].topheight/2.f, 0, 0, 255));
-                _1_0_0_1_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _1_0_0_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_1_0_0_1_iso_tile);
             }
@@ -282,20 +278,10 @@ void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, s
             {
                 //_1_1_0_0_iso_tile.setFillColor(sf::Color(std::min(basetile_data[i][j].topheight/2.f, 255.f), std::min(basetile_data[i][j].rightheight/2.f, 255.f), std::min(basetile_data[i][j].botheight/2.f, 255.f), 255));
                 _1_1_0_0_iso_tile.setFillColor(sf::Color(basetile_data[i][j].topheight/2.f, 0, 0, 255));
-                _1_1_0_0_iso_tile.setPosition(sf::Vector2f(x1 - viewpoint.x, y1 - viewpoint.y - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
+                _1_1_0_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - basetile_data[i][j].leftheight));        //Set the new position of the template tile offset by the viewpoint
 
                 window.draw(_1_1_0_0_iso_tile);
             }
         }
     }
-}
-
-
-//A function that scrolls the viewpoint when certain keys are pressed
-//  TODO: Make viewpoint dependent on map location; i.e. stay a certain distance from map (will scroll diagonally)
-//
-void changeviewpoint(sf::Vector2f &viewpoint, bool leftpressed, bool rightpressed, bool uppressed, bool downpressed)
-{
-    viewpoint.x = std::max(viewpoint.x + 12 * rightpressed - 12 * leftpressed, 0.f);    //
-    viewpoint.y = std::max(viewpoint.y + 12 * downpressed  - 12 * uppressed, -8208.f);  //return std::min eventually
 }
