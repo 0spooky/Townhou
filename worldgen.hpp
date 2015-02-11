@@ -6,11 +6,11 @@
 
 class worldgen {
 
-    static PerlinNoise noisegenerator();
+    static PerlinNoise noisegenerator;
 
 public:
     worldgen();
-    world generateworld();
+    world generateworld(int xsize, int ysize);
 
 };
 

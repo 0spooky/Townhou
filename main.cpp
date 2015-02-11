@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 #include <cmath>
 #include <limits>
 //#include <vector>                                         //Apparently included in <SFML/Graphics.hpp>
@@ -7,10 +6,12 @@
 #include "Noisegen.hpp"
 #include "basetile.hpp"
 #include "cameraview.hpp"
+#include "world.hpp"
+#include "worldgen.hpp"
 
 void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsigned short xsize, unsigned short ysize);                      //Initialises a "matrix" of basetiles
 
-void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera);     //Draws a map of basetiles given the data, the window, and viewpoint
+void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld);     //Draws a map of basetiles given the data, the window, and viewpoint
 
 int main()
 {
@@ -21,15 +22,15 @@ int main()
     const int YWINDOWDIMENSION = 960;
 
     std::vector < std::vector <basetile> > basetile_data;               //This is an empty vector of vectors which contain base tiles
-    //buildtilemap(basetile_data, 512, 512);                            //Currently working with 513 x 513 map
     buildtilemap(basetile_data, 512, 512);                              //debug tilemap
 
-    //sf::RenderWindow window(sf::VideoMode(1280, 960), "Townhou", sf::Style::Close);       //For when people with 4:3 monitors want a distribution
+    worldgen generator;
+    world gameworld = generator.generateworld(512, 512);
+
     sf::RenderWindow window(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close);
     window.setFramerateLimit(120);
 
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
-    //sf::Vector2f viewpoint(0.f,-540.f);                                 //debug viewpoint
     cameraview maincamera(0,-YWINDOWDIMENSION/2);
 
     bool    leftpressed  = false,                                       //These are used for seamless scrolling
@@ -73,7 +74,7 @@ int main()
         maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);
 
         window.clear();
-        drawtilemap(basetile_data, window, maincamera);
+        drawtilemap(basetile_data, window, maincamera, gameworld);
         window.display();
     }
 
@@ -105,7 +106,7 @@ void buildtilemap(std::vector < std::vector <basetile> > & basetile_data, unsign
 
 //A function to draw the entirety of a vector of vectors of basetiles on a window given a viewpoint
 //
-void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera)
+void drawtilemap(const std::vector < std::vector <basetile> > & basetile_data, sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld)
 {
     sf::ConvexShape flat_iso_tile(4);                                   // This code is to draw an openGL SFML isometric flat square.
     flat_iso_tile.setPoint(0, sf::Vector2f(0.f, 0.f));                  // If you use sprites, remove it eventually
