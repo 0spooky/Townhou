@@ -5,7 +5,21 @@
 #include <cmath>
 #include <limits>
 
+enum tiletype {
+    TILEFLAT,
+    TILE0111,
+    TILE1011,
+    TILE1101,
+    TILE1110,
+    TILE0110,
+    TILE0011,
+    TILE1001,
+    TILE1100
+    };
+
 class basetile {
+
+    tiletype typeoftile;
 
 public:
     short   leftheight,                                     //The heights of the vertices of the tile
@@ -19,6 +33,7 @@ public:
     basetile();
     void setvertices(short left, short top, short right, short bot);
     int gethighestpoint() const;
+    tiletype gettiletype() const;
     bool flat;
 
 };

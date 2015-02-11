@@ -7,6 +7,24 @@ void basetile::setvertices(short left, short top, short right, short bot)
     rightheight = right;
     botheight   = bot;
     flat        = ((left == top) && (top == right) && (right == bot));
+    if (flat)
+        typeoftile = TILEFLAT;
+    else if ((left <  top) && (top == right) && (right == bot))
+        typeoftile = TILE0111;
+    else if ((left >  top) && (top <  right) && (right == bot))
+        typeoftile = TILE1011;
+    else if ((left == top) && (top >  right) && (right <  bot))
+        typeoftile = TILE1101;
+    else if ((left == top) && (top == right) && (right >  bot))
+        typeoftile = TILE1110;
+    else if ((left <  top) && (top == right) && (right >  bot))
+        typeoftile = TILE0110;
+    else if ((left == top) && (top <  right) && (right == bot))
+        typeoftile = TILE0011;
+    else if ((left >  top) && (top == right) && (right <  bot))
+        typeoftile = TILE1001;
+    else if ((left == top) && (top >  right) && (right == bot))
+        typeoftile = TILE1100;
 }
 
 basetile::basetile (short left, short top, short right, short bot)

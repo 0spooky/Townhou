@@ -9,6 +9,8 @@
 #include "world.hpp"
 #include "worldgen.hpp"
 
+void setTilePosition(sf::ConvexShape * tileshape, const int x1, const int y1, const cameraview &maincamera, const short leftheight);
+
 void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld);     //Draws a map of basetiles given the data, the window, and viewpoint
 
 int main()
@@ -154,7 +156,6 @@ void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const w
     _1_1_0_0_iso_tile.setOutlineThickness(1);
     _1_1_0_0_iso_tile.setOutlineColor(sf::Color(255,255,255,128));
 
-
     int x1, y1;                                             //      used for algebraic purposes
 
     int   xsize = gameworld.getXsize(),                     //      The arbitrary "x" size of the game map
@@ -250,10 +251,16 @@ void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const w
                      (gameworld.tile(i,j).rightheight == gameworld.tile(i,j).botheight))
             {
                 _1_1_0_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                _1_1_0_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
-
+                //_1_1_0_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                setTilePosition(&_1_1_0_0_iso_tile, x1, y1, maincamera, gameworld.tile(i,j).leftheight);
                 window.draw(_1_1_0_0_iso_tile);
             }
         }
     }
 }
+
+void setTilePosition(sf::ConvexShape * tileshape, const int x1, const int y1, const cameraview &maincamera, const short leftheight)
+{
+    tileshape->setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - leftheight));
+}
+
