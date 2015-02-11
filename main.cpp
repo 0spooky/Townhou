@@ -29,7 +29,7 @@ int main()
     window.setFramerateLimit(120);
 
     //sf::Vector2f viewpoint(960.f, -480.f);                            //The normal starting viewpoint
-    sf::Vector2f viewpoint(0.f,-540.f);                                 //debug viewpoint
+    //sf::Vector2f viewpoint(0.f,-540.f);                                 //debug viewpoint
     cameraview maincamera(0,-YWINDOWDIMENSION/2);
 
     bool    leftpressed  = false,                                       //These are used for seamless scrolling

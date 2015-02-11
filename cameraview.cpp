@@ -1,4 +1,3 @@
-
 #include "cameraview.hpp"
 #include <algorithm> //std::max
 
