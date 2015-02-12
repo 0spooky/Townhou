@@ -6,8 +6,7 @@ void basetile::setvertices(short left, short top, short right, short bot)
     topheight   = top;
     rightheight = right;
     botheight   = bot;
-    flat        = ((left == top) && (top == right) && (right == bot));
-    if (flat)
+    if      ((left == top) && (top == right) && (right == bot))
         typeoftile = TILEFLAT;
     else if ((left <  top) && (top == right) && (right == bot))
         typeoftile = TILE0111;
@@ -25,6 +24,8 @@ void basetile::setvertices(short left, short top, short right, short bot)
         typeoftile = TILE1001;
     else if ((left == top) && (top >  right) && (right == bot))
         typeoftile = TILE1100;
+    else
+        typeoftile = TILENULL;
 }
 
 basetile::basetile (short left, short top, short right, short bot)
@@ -47,4 +48,8 @@ int basetile::gethighestpoint() const{
                             rightheight),
                     std::max(botheight,
                             leftheight));
+}
+
+tiletype basetile::gettiletype() const{
+    return typeoftile;
 }
