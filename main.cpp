@@ -9,7 +9,7 @@
 #include "world.hpp"
 #include "worldgen.hpp"
 
-void setTilePosition(sf::ConvexShape * tileshape, const int x1, const int y1, const cameraview &maincamera, const short leftheight);
+void setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposition);
 
 void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld);     //Draws a map of basetiles given the data, the window, and viewpoint
 
@@ -80,6 +80,7 @@ int main()
 
 //A function to draw the entirety of a vector of vectors of basetiles on a window given a viewpoint
 //
+
 
 
 void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld)
@@ -174,75 +175,73 @@ void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const w
             x1 = 32 * (i + j);      //the x and y solutions to the transformation matrix [x] [ 32      32 ]
             y1 = 16 * (-i + j);     //                                                   [y] [-16      16 ]
 
-            if (gameworld.tile(i,j).gettiletype() == TILEFLAT)
-            {
-                flat_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                flat_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight);
 
-                window.draw(flat_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE0111)
-            {
-                _0_1_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                _0_1_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+            switch(gameworld.tile(i,j).gettiletype()) {
 
-                window.draw(_0_1_1_1_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE1011)
-            {
-                _1_0_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                _1_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILEFLAT):
+                    flat_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    setTilePosition(&flat_iso_tile, tileposition);
+                    window.draw(flat_iso_tile);
+                    break;
 
-                window.draw(_1_0_1_1_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE1101)
-            {
-                _1_1_0_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                _1_1_0_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILE0111):
+                    _0_1_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    setTilePosition(&_0_1_1_1_iso_tile, tileposition);
+                    window.draw(_0_1_1_1_iso_tile);
+                    break;
 
-                window.draw(_1_1_0_1_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE1110)
-            {
-                _1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                _1_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILE1011):
+                    _1_0_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    setTilePosition(&_1_0_1_1_iso_tile, tileposition);
+                    window.draw(_1_0_1_1_iso_tile);
+                    break;
 
-                window.draw(_1_1_1_0_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE0110)
-            {
-                _0_1_1_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                _0_1_1_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILE1101):
+                    _1_1_0_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    setTilePosition(&_1_1_0_1_iso_tile, tileposition);
+                    window.draw(_1_1_0_1_iso_tile);
+                    break;
 
-                window.draw(_0_1_1_0_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE0011)
-            {
-                _0_0_1_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                _0_0_1_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILE1110):
+                    _1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    setTilePosition(&_1_1_1_0_iso_tile, tileposition);
+                    window.draw(_1_1_1_0_iso_tile);
+                    break;
 
-                window.draw(_0_0_1_1_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE1001)
-            {
-                _1_0_0_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                _1_0_0_1_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
+                case (TILE0110):
+                    _0_1_1_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
+                    setTilePosition(&_0_1_1_0_iso_tile, tileposition);
+                    window.draw(_0_1_1_0_iso_tile);
+                    break;
 
-                window.draw(_1_0_0_1_iso_tile);
-            }
-            else if (gameworld.tile(i,j).gettiletype() == TILE1100)
-            {
-                _1_1_0_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                //_1_1_0_0_iso_tile.setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight));        //Set the new position of the template tile offset by the viewpoint
-                setTilePosition(&_1_1_0_0_iso_tile, x1, y1, maincamera, gameworld.tile(i,j).leftheight);
-                window.draw(_1_1_0_0_iso_tile);
+                case (TILE0011):
+                    _0_0_1_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
+                    setTilePosition(&_0_0_1_1_iso_tile, tileposition);
+                    window.draw(_0_0_1_1_iso_tile);
+                    break;
+
+                case (TILE1001):
+                    _1_0_0_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
+                    setTilePosition(&_1_0_0_1_iso_tile, tileposition);
+                    window.draw(_1_0_0_1_iso_tile);
+                    break;
+
+                case (TILE1100):
+                    _1_1_0_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
+                    setTilePosition(&_1_1_0_0_iso_tile, tileposition);
+                    window.draw(_1_1_0_0_iso_tile);
+                    break;
+
+                //default:
+                //   break;
             }
         }
     }
 }
 
-void setTilePosition(sf::ConvexShape * tileshape, const int x1, const int y1, const cameraview &maincamera, const short leftheight)
+void setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposition)
 {
-    tileshape->setPosition(sf::Vector2f(x1 - maincamera.getX(), y1 - maincamera.getY() - leftheight));
+    tileshape->setPosition(screenposition);
 }
 
