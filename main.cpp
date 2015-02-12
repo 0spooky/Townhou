@@ -1,14 +1,24 @@
-#include <SFML/Graphics.hpp>
-#include <cmath>
-#include <limits>
+//#include <SFML/Graphics.hpp>
+//#include <cmath>
+//#include <limits>
 //#include <vector>                                         //Apparently included in <SFML/Graphics.hpp>
-#include <time.h> //TESTING
-#include "Noisegen.hpp"
-#include "basetile.hpp"
-#include "cameraview.hpp"
-#include "world.hpp"
-#include "worldgen.hpp"
+//#include <time.h> //TESTING
+//#include "Noisegen.hpp"
+//#include "basetile.hpp"
+//#include "cameraview.hpp"
+//#include "world.hpp"
+//#include "worldgen.hpp"
+#include "application.hpp"
 
+
+int main()
+{
+    application game;
+    game.run();
+    return 0;
+}
+
+/*
 void setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposition);
 
 void drawtilemap(sf::RenderWindow &window, const cameraview &maincamera, const world &gameworld);     //Draws a map of basetiles given the data, the window, and viewpoint
@@ -245,3 +255,4 @@ void setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposit
     tileshape->setPosition(screenposition);
 }
 
+*/
