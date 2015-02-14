@@ -7,7 +7,11 @@
 class world {
     friend class worldgen;
     std::vector < std::vector <basetile> > basetile_data;
+
+    world();
 public:
+
+    world(const world& genworld);
 
     int getXsize() const {return basetile_data[0].size();}
     int getYsize() const {return basetile_data.size();}

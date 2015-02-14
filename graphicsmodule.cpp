@@ -38,7 +38,7 @@ void graphicsmodule::initializetile(sf::ConvexShape * gentile, tiletype typeofti
             break;
         case (TILE1101):
             gentile->setPoint(1, sf::Vector2f(32.f, 16.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 15.f));
+            gentile->setPoint(2, sf::Vector2f(64.f, 16.f));
             gentile->setPoint(3, sf::Vector2f(32.f, -16.f));
             break;
         case (TILE1110):

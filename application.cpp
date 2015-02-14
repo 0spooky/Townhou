@@ -7,14 +7,10 @@
 #include "cameraview.hpp"
 
 application::application() : mwindow(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close),
-                             maincamera(0,-YWINDOWDIMENSION/2)
+                             maincamera(0,-YWINDOWDIMENSION/2),
+                             gameworld(generator.generateworld(512, 512))
 {
-
-    srand (time(NULL));
-
     mwindow.setFramerateLimit(120);
-
-    gameworld = generator.generateworld(512, 512);
 }
 
 void application::run() {

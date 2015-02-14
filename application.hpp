@@ -12,12 +12,12 @@ class application {
     static const int XWINDOWDIMENSION = 1920;
     static const int YWINDOWDIMENSION = 1080;
 
-    sf::RenderWindow mwindow;
-
     worldgen generator;
     world gameworld;
 
     cameraview maincamera;
+
+    sf::RenderWindow mwindow;                   //Put this above world generator to have the screen the first thing generated;  Might be useful later for load screens
 
     graphicsmodule mgraphicsmodule;
 
