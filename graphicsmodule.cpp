@@ -7,7 +7,7 @@ graphicsmodule::graphicsmodule() {
 
     maptiletex.loadFromFile("data/tiles_grass_0.png");
 
-    flat_iso_tile.setTexture(maptiletex);                                   //Origins are really wrong
+    flat_iso_tile.setTexture(maptiletex);
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
     flat_iso_tile.setOrigin(0, 24);
 
@@ -224,5 +224,4 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
             }
         }
     }
-
 }
