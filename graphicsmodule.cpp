@@ -7,87 +7,42 @@ graphicsmodule::graphicsmodule() {
 
     maptiletex.loadFromFile("data/tiles_grass_0.png");
 
-    flat_iso_tile.setTexture(maptiletex);
+    flat_iso_tile.setTexture(maptiletex);                                   //Origins are really wrong
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
-    flat_iso_tile.setOrigin(0, 24);
+    flat_iso_tile.setOrigin(0, 32);
 
-    /*
     _1_1_0_1_iso_tile.setTexture(maptiletex);
     _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
     _1_1_0_1_iso_tile.setOrigin(0, 24);
 
+    _1_0_1_1_iso_tile.setTexture(maptiletex);
+    _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
+    _1_0_1_1_iso_tile.setOrigin(0, 24);
+
     _0_1_1_1_iso_tile.setTexture(maptiletex);
     _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
-    _0_1_1_1_iso_tile.setOrigin(0, 24);
-    */
+    _0_1_1_1_iso_tile.setOrigin(0, 32);
 
     _1_1_1_0_iso_tile.setTexture(maptiletex);
     _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
     _1_1_1_0_iso_tile.setOrigin(0, 24);
 
-    initializetile(&_0_1_1_1_iso_tile, TILE0111);
-    initializetile(&_1_0_1_1_iso_tile, TILE1011);
-    initializetile(&_1_1_0_1_iso_tile, TILE1101);
-    //initializetile(&_1_1_1_0_iso_tile, TILE1110);
-    initializetile(&_0_1_1_0_iso_tile, TILE0110);
-    initializetile(&_0_0_1_1_iso_tile, TILE0011);
-    initializetile(&_1_0_0_1_iso_tile, TILE1001);
-    initializetile(&_1_1_0_0_iso_tile, TILE1100);
-}
 
-void graphicsmodule::initializetile(sf::ConvexShape * gentile, tiletype typeoftile) {
-    gentile->setPointCount(4);
-    gentile->setPoint(0, sf::Vector2f(0.f, 0.f));
+    _1_1_0_0_iso_tile.setTexture(maptiletex);
+    _1_1_0_0_iso_tile.setTextureRect(sf::IntRect(0*64, 2*48, 64, 48));
+    _1_1_0_0_iso_tile.setOrigin(0, 24);
 
-    switch(typeoftile) {
-        case (TILEFLAT):
-            gentile->setPoint(1, sf::Vector2f(32.f, 16.f));                 // If you use sprites, remove it eventually
-            gentile->setPoint(2, sf::Vector2f(64.f, 0.f));                  // For some reason, I have these all drawing counterclockwise
-            gentile->setPoint(3, sf::Vector2f(32.f, -16.f));                // even though all measurements are clockwise. This should be fixed
-            break;
-        case (TILE0111):
-            gentile->setPoint(1, sf::Vector2f(32.f, 0.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, -16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -32.f));
-            break;
-        case (TILE1011):
-            gentile->setPoint(1, sf::Vector2f(32.f, 16.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 0.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, 0.f));
-            break;
-        case (TILE1101):
-            gentile->setPoint(1, sf::Vector2f(32.f, 16.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -16.f));
-            break;
-        case (TILE1110):
-            gentile->setPoint(1, sf::Vector2f(32.f, 32.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 0.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -16.f));
-            break;
-        case (TILE0110):
-            gentile->setPoint(1, sf::Vector2f(32.f, 16.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, -16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -32.f));
-            break;
-        case (TILE0011):
-            gentile->setPoint(1, sf::Vector2f(32.f, 0.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, -16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -16.f));
-            break;
-        case (TILE1001):
-            gentile->setPoint(1, sf::Vector2f(32.f, 16.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, 0.f));
-            break;
-        case (TILE1100):
-            gentile->setPoint(1, sf::Vector2f(32.f, 32.f));
-            gentile->setPoint(2, sf::Vector2f(64.f, 16.f));
-            gentile->setPoint(3, sf::Vector2f(32.f, -16.f));
-            break;
-    }
-    gentile->setOutlineThickness(1);
-    gentile->setOutlineColor(sf::Color(255,255,255,128));
+    _1_0_0_1_iso_tile.setTexture(maptiletex);
+    _1_0_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 2*48, 64, 48));
+    _1_0_0_1_iso_tile.setOrigin(0, 24);
+
+    _0_0_1_1_iso_tile.setTexture(maptiletex);
+    _0_0_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 2*48, 64, 48));
+    _0_0_1_1_iso_tile.setOrigin(0, 32);
+
+    _0_1_1_0_iso_tile.setTexture(maptiletex);
+    _0_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 2*48, 64, 48));
+    _0_1_1_0_iso_tile.setOrigin(0, 32);
 
 }
 
@@ -115,60 +70,47 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
             switch(gameworld.tile(i,j).gettiletype()) {
 
                 case (TILEFLAT):
-
                     flat_iso_tile.setPosition(tileposition);
                     mwindow.draw(flat_iso_tile);
                     break;
 
                 case (TILE0111):
-                    _0_1_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    _setTilePosition(&_0_1_1_1_iso_tile, tileposition);
+                    _0_1_1_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_0_1_1_1_iso_tile);
                     break;
 
                 case (TILE1011):
-                    _1_0_1_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    _setTilePosition(&_1_0_1_1_iso_tile, tileposition);
+                    _1_0_1_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_0_1_1_iso_tile);
                     break;
 
                 case (TILE1101):
-                    _1_1_0_1_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    _setTilePosition(&_1_1_0_1_iso_tile, tileposition);
+                    _1_1_0_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_1_0_1_iso_tile);
                     break;
 
                 case (TILE1110):
-                    //_1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    //_setTilePosition(&_1_1_1_0_iso_tile, tileposition);
-                    //mwindow.draw(_1_1_1_0_iso_tile);
-
                     _1_1_1_0_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_1_1_0_iso_tile);
-
                     break;
 
                 case (TILE0110):
-                    _0_1_1_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                    _setTilePosition(&_0_1_1_0_iso_tile, tileposition);
+                    _0_1_1_0_iso_tile.setPosition(tileposition);
                     mwindow.draw(_0_1_1_0_iso_tile);
                     break;
 
                 case (TILE0011):
-                    _0_0_1_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                    _setTilePosition(&_0_0_1_1_iso_tile, tileposition);
+                    _0_0_1_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_0_0_1_1_iso_tile);
                     break;
 
                 case (TILE1001):
-                    _1_0_0_1_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                    _setTilePosition(&_1_0_0_1_iso_tile, tileposition);
+                    _1_0_0_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_0_0_1_iso_tile);
                     break;
 
                 case (TILE1100):
-                    _1_1_0_0_iso_tile.setFillColor(sf::Color(gameworld.tile(i,j).topheight/2.f, 0, 0, 255));
-                    _setTilePosition(&_1_1_0_0_iso_tile, tileposition);
+                    _1_1_0_0_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_1_0_0_iso_tile);
                     break;
 
@@ -178,8 +120,4 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
         }
     }
 
-}
-
-void graphicsmodule::_setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposition) {
-    tileshape->setPosition(screenposition);
 }

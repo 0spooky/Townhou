@@ -12,20 +12,15 @@ class graphicsmodule {
 
     sf::Sprite flat_iso_tile;
 
+    sf::Sprite _1_1_0_1_iso_tile;
+    sf::Sprite _1_0_1_1_iso_tile;
+    sf::Sprite _0_1_1_1_iso_tile;
     sf::Sprite _1_1_1_0_iso_tile;               //_LEFT_TOP_RIGHT_BOTTOM
 
-    //sf::ConvexShape flat_iso_tile;
-    sf::ConvexShape _0_1_1_1_iso_tile;
-    sf::ConvexShape _1_0_1_1_iso_tile;
-    sf::ConvexShape _1_1_0_1_iso_tile;
-    //sf::ConvexShape _1_1_1_0_iso_tile;
-    sf::ConvexShape _0_1_1_0_iso_tile;
-    sf::ConvexShape _0_0_1_1_iso_tile;
-    sf::ConvexShape _1_0_0_1_iso_tile;
-    sf::ConvexShape _1_1_0_0_iso_tile;
-
-    void initializetile(sf::ConvexShape * gentile, tiletype typeoftile);
-    void _setTilePosition(sf::ConvexShape * tileshape, const sf::Vector2f screenposition);
+    sf::Sprite _1_1_0_0_iso_tile;
+    sf::Sprite _1_0_0_1_iso_tile;
+    sf::Sprite _0_0_1_1_iso_tile;
+    sf::Sprite _0_1_1_0_iso_tile;
 
 public:
     graphicsmodule();

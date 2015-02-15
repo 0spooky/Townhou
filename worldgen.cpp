@@ -20,10 +20,10 @@ world worldgen::generateworld(int xsize, int ysize) {
     {
         for(unsigned short j = 0; j < ysize; j++)                       //Tick up
         {
-            temp_y_vector.push_back(basetile(16 * floor(noisegenerator.GetHeight(i,j) + 16),         //basetile(left, top, right, bottom)
-                                             16 * floor(noisegenerator.GetHeight(i+1,j) + 16),
-                                             16 * floor(noisegenerator.GetHeight(i+1,j+1) + 16),
-                                             16 * floor(noisegenerator.GetHeight(i,j+1) + 16)));
+            temp_y_vector.push_back(basetile(8 * floor(noisegenerator.GetHeight(i,j) + 16),         //basetile(left, top, right, bottom)
+                                             8 * floor(noisegenerator.GetHeight(i+1,j) + 16),
+                                             8 * floor(noisegenerator.GetHeight(i+1,j+1) + 16),
+                                             8 * floor(noisegenerator.GetHeight(i,j+1) + 16)));
         }
         newworld.basetile_data.push_back(temp_y_vector);
         temp_y_vector.clear();
