@@ -5,11 +5,30 @@
 
 graphicsmodule::graphicsmodule() {
 
-    initializetile(&flat_iso_tile,     TILEFLAT);
+    maptiletex.loadFromFile("data/tiles_grass_0.png");
+
+    flat_iso_tile.setTexture(maptiletex);
+    flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
+    flat_iso_tile.setOrigin(0, 24);
+
+    /*
+    _1_1_0_1_iso_tile.setTexture(maptiletex);
+    _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
+    _1_1_0_1_iso_tile.setOrigin(0, 24);
+
+    _0_1_1_1_iso_tile.setTexture(maptiletex);
+    _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
+    _0_1_1_1_iso_tile.setOrigin(0, 24);
+    */
+
+    _1_1_1_0_iso_tile.setTexture(maptiletex);
+    _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
+    _1_1_1_0_iso_tile.setOrigin(0, 24);
+
     initializetile(&_0_1_1_1_iso_tile, TILE0111);
     initializetile(&_1_0_1_1_iso_tile, TILE1011);
     initializetile(&_1_1_0_1_iso_tile, TILE1101);
-    initializetile(&_1_1_1_0_iso_tile, TILE1110);
+    //initializetile(&_1_1_1_0_iso_tile, TILE1110);
     initializetile(&_0_1_1_0_iso_tile, TILE0110);
     initializetile(&_0_0_1_1_iso_tile, TILE0011);
     initializetile(&_1_0_0_1_iso_tile, TILE1001);
@@ -96,8 +115,8 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
             switch(gameworld.tile(i,j).gettiletype()) {
 
                 case (TILEFLAT):
-                    flat_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    _setTilePosition(&flat_iso_tile, tileposition);
+
+                    flat_iso_tile.setPosition(tileposition);
                     mwindow.draw(flat_iso_tile);
                     break;
 
@@ -120,9 +139,13 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
                     break;
 
                 case (TILE1110):
-                    _1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
-                    _setTilePosition(&_1_1_1_0_iso_tile, tileposition);
+                    //_1_1_1_0_iso_tile.setFillColor(sf::Color(std::min(gameworld.tile(i,j).topheight/2.f, 255.f), std::min(gameworld.tile(i,j).rightheight/2.f, 255.f), std::min(gameworld.tile(i,j).botheight/2.f, 255.f), 255));
+                    //_setTilePosition(&_1_1_1_0_iso_tile, tileposition);
+                    //mwindow.draw(_1_1_1_0_iso_tile);
+
+                    _1_1_1_0_iso_tile.setPosition(tileposition);
                     mwindow.draw(_1_1_1_0_iso_tile);
+
                     break;
 
                 case (TILE0110):

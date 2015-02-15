@@ -15,7 +15,7 @@ application::application() : mwindow(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIME
 
 void application::run() {
 
-    srand (time(NULL));
+    //srand (time(NULL));
 
     bool    leftpressed  = false,                                       //These are used for seamless scrolling
             rightpressed = false,                                       //

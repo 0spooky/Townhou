@@ -7,11 +7,18 @@
 #include "basetile.hpp"
 
 class graphicsmodule {
-    sf::ConvexShape flat_iso_tile;
+
+    sf::Texture maptiletex;
+
+    sf::Sprite flat_iso_tile;
+
+    sf::Sprite _1_1_1_0_iso_tile;               //_LEFT_TOP_RIGHT_BOTTOM
+
+    //sf::ConvexShape flat_iso_tile;
     sf::ConvexShape _0_1_1_1_iso_tile;
     sf::ConvexShape _1_0_1_1_iso_tile;
     sf::ConvexShape _1_1_0_1_iso_tile;
-    sf::ConvexShape _1_1_1_0_iso_tile;
+    //sf::ConvexShape _1_1_1_0_iso_tile;
     sf::ConvexShape _0_1_1_0_iso_tile;
     sf::ConvexShape _0_0_1_1_iso_tile;
     sf::ConvexShape _1_0_0_1_iso_tile;
