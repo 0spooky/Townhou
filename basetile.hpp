@@ -15,16 +15,16 @@ enum tiletype {
     TILE0011,
     TILE1001,
     TILE1100,
-    TILE1010,
-    TILE0101,
-    TILE1000,
-    TILE0100,
-    TILE0010,
-    TILE0001,
+    TILE2111,
+    TILE1211,
+    TILE1121,
+    TILE1112,
     TILE0121,
     TILE1012,
     TILE2101,
     TILE1210,
+    TILE0101,
+    TILE1010,
     TILENULL
     };
 
@@ -44,6 +44,7 @@ public:
     basetile();
     void setvertices(short left, short top, short right, short bot);
     int gethighestpoint() const;
+    int reference_height() const;
     tiletype gettiletype() const;
 
 };

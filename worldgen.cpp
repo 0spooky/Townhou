@@ -9,7 +9,7 @@ PerlinNoise worldgen::noisegenerator;
 
 worldgen::worldgen() {
     srand(time(NULL));
-    noisegenerator.Set(.125, .0625, 16, 8, rand());
+    noisegenerator.Set(.125, .0625, 16, 8, rand()); //freq was .0625
 }
 
 world worldgen::generateworld(int xsize, int ysize) {

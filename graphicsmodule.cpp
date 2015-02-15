@@ -9,24 +9,27 @@ graphicsmodule::graphicsmodule() {
 
     flat_iso_tile.setTexture(maptiletex);                                   //Origins are really wrong
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
-    flat_iso_tile.setOrigin(0, 32);
+    flat_iso_tile.setOrigin(0, 24);
 
-    _1_1_0_1_iso_tile.setTexture(maptiletex);
-    _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
-    _1_1_0_1_iso_tile.setOrigin(0, 24);
+    //Single high tiles
 
-    _1_0_1_1_iso_tile.setTexture(maptiletex);
-    _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
-    _1_0_1_1_iso_tile.setOrigin(0, 24);
+    _2_1_1_1_iso_tile.setTexture(maptiletex);
+    _2_1_1_1_iso_tile.setTextureRect(sf::IntRect(0*64, 1*48, 64, 48));
+    _2_1_1_1_iso_tile.setOrigin(0, 24);
 
-    _0_1_1_1_iso_tile.setTexture(maptiletex);
-    _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
-    _0_1_1_1_iso_tile.setOrigin(0, 32);
+    _1_1_1_2_iso_tile.setTexture(maptiletex);
+    _1_1_1_2_iso_tile.setTextureRect(sf::IntRect(1*64, 1*48, 64, 48));
+    _1_1_1_2_iso_tile.setOrigin(0, 24);
 
-    _1_1_1_0_iso_tile.setTexture(maptiletex);
-    _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
-    _1_1_1_0_iso_tile.setOrigin(0, 24);
+    _1_1_2_1_iso_tile.setTexture(maptiletex);
+    _1_1_2_1_iso_tile.setTextureRect(sf::IntRect(2*64, 1*48, 64, 48));
+    _1_1_2_1_iso_tile.setOrigin(0, 24);
 
+    _1_2_1_1_iso_tile.setTexture(maptiletex);
+    _1_2_1_1_iso_tile.setTextureRect(sf::IntRect(3*64, 1*48, 64, 48));
+    _1_2_1_1_iso_tile.setOrigin(0, 24);
+
+    //Full slant tiles
 
     _1_1_0_0_iso_tile.setTexture(maptiletex);
     _1_1_0_0_iso_tile.setTextureRect(sf::IntRect(0*64, 2*48, 64, 48));
@@ -38,11 +41,57 @@ graphicsmodule::graphicsmodule() {
 
     _0_0_1_1_iso_tile.setTexture(maptiletex);
     _0_0_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 2*48, 64, 48));
-    _0_0_1_1_iso_tile.setOrigin(0, 32);
+    _0_0_1_1_iso_tile.setOrigin(0, 24);
 
     _0_1_1_0_iso_tile.setTexture(maptiletex);
     _0_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 2*48, 64, 48));
-    _0_1_1_0_iso_tile.setOrigin(0, 32);
+    _0_1_1_0_iso_tile.setOrigin(0, 24);
+
+    //Single low tiles
+
+    _1_1_0_1_iso_tile.setTexture(maptiletex);
+    _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
+    _1_1_0_1_iso_tile.setOrigin(0, 24);
+
+    _1_0_1_1_iso_tile.setTexture(maptiletex);
+    _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
+    _1_0_1_1_iso_tile.setOrigin(0, 24);
+
+    _0_1_1_1_iso_tile.setTexture(maptiletex);
+    _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
+    _0_1_1_1_iso_tile.setOrigin(0, 24);
+
+    _1_1_1_0_iso_tile.setTexture(maptiletex);
+    _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
+    _1_1_1_0_iso_tile.setOrigin(0, 24);
+
+    //Full tilt tiles
+
+    _1_0_1_2_iso_tile.setTexture(maptiletex);
+    _1_0_1_2_iso_tile.setTextureRect(sf::IntRect(0*64, 4*48, 64, 48));
+    _1_0_1_2_iso_tile.setOrigin(0, 24);
+
+    _2_1_0_1_iso_tile.setTexture(maptiletex);
+    _2_1_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 4*48, 64, 48));
+    _2_1_0_1_iso_tile.setOrigin(0, 24);
+
+    _1_2_1_0_iso_tile.setTexture(maptiletex);
+    _1_2_1_0_iso_tile.setTextureRect(sf::IntRect(2*64, 4*48, 64, 48));
+    _1_2_1_0_iso_tile.setOrigin(0, 24);
+
+    _0_1_2_1_iso_tile.setTexture(maptiletex);
+    _0_1_2_1_iso_tile.setTextureRect(sf::IntRect(3*64, 4*48, 64, 48));
+    _0_1_2_1_iso_tile.setOrigin(0, 24);
+
+    //Split tiles
+
+    _0_1_0_1_iso_tile.setTexture(maptiletex);
+    _0_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 5*48, 64, 48));
+    _0_1_0_1_iso_tile.setOrigin(0, 24);
+
+    _1_0_1_0_iso_tile.setTexture(maptiletex);
+    _1_0_1_0_iso_tile.setTextureRect(sf::IntRect(1*64, 5*48, 64, 48));
+    _1_0_1_0_iso_tile.setOrigin(0, 24);
 
 }
 
@@ -65,7 +114,7 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
             x1 = 32 * (i + j);      //the x and y solutions to the transformation matrix [x] [ 32      32 ]
             y1 = 16 * (-i + j);     //                                                   [y] [-16      16 ]
 
-            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).leftheight);
+            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).reference_height());
 
             switch(gameworld.tile(i,j).gettiletype()) {
 
@@ -74,6 +123,49 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
                     mwindow.draw(flat_iso_tile);
                     break;
 
+                //Single high tiles
+                case (TILE2111):
+                    _2_1_1_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_2_1_1_1_iso_tile);
+                    break;
+
+                case (TILE1112):
+                    _1_1_1_2_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_1_1_2_iso_tile);
+                    break;
+
+                case (TILE1121):
+                    _1_1_2_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_1_2_1_iso_tile);
+                    break;
+
+                case (TILE1211):
+                    _1_2_1_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_2_1_1_iso_tile);
+                    break;
+
+                //Full slant tiles
+                case (TILE0110):
+                    _0_1_1_0_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_0_1_1_0_iso_tile);
+                    break;
+
+                case (TILE0011):
+                    _0_0_1_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_0_0_1_1_iso_tile);
+                    break;
+
+                case (TILE1001):
+                    _1_0_0_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_0_0_1_iso_tile);
+                    break;
+
+                case (TILE1100):
+                    _1_1_0_0_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_1_0_0_iso_tile);
+                    break;
+
+                //Single low tiles
                 case (TILE0111):
                     _0_1_1_1_iso_tile.setPosition(tileposition);
                     mwindow.draw(_0_1_1_1_iso_tile);
@@ -94,24 +186,37 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
                     mwindow.draw(_1_1_1_0_iso_tile);
                     break;
 
-                case (TILE0110):
-                    _0_1_1_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_1_1_0_iso_tile);
+                //Full tile tiles
+
+                case (TILE1012):
+                    _1_0_1_2_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_0_1_2_iso_tile);
                     break;
 
-                case (TILE0011):
-                    _0_0_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_0_1_1_iso_tile);
+                case (TILE2101):
+                    _2_1_0_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_2_1_0_1_iso_tile);
                     break;
 
-                case (TILE1001):
-                    _1_0_0_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_0_0_1_iso_tile);
+                case (TILE1210):
+                    _1_2_1_0_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_2_1_0_iso_tile);
                     break;
 
-                case (TILE1100):
-                    _1_1_0_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_0_0_iso_tile);
+                case (TILE0121):
+                    _0_1_2_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_0_1_2_1_iso_tile);
+                    break;
+
+                //Split tiles
+                case (TILE1010):
+                    _1_0_1_0_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_1_0_1_0_iso_tile);
+                    break;
+
+                case (TILE0101):
+                    _0_1_0_1_iso_tile.setPosition(tileposition);
+                    mwindow.draw(_0_1_0_1_iso_tile);
                     break;
 
                 //default:
