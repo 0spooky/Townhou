@@ -31,7 +31,7 @@ void application::run() {
         {
             if (event.type == sf::Event::Closed)
                 mwindow.close();
-            if (event.type == sf::Event::KeyPressed)
+            else if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Left)
                     leftpressed = true;
@@ -42,7 +42,7 @@ void application::run() {
                 if (event.key.code == sf::Keyboard::Down)
                     downpressed = true;
             }
-            if (event.type == sf::Event::KeyReleased)
+            else if (event.type == sf::Event::KeyReleased)
             {
                 if (event.key.code == sf::Keyboard::Left)
                     leftpressed = false;
@@ -53,6 +53,8 @@ void application::run() {
                 if (event.key.code == sf::Keyboard::Down)
                     downpressed = false;
             }
+            else if (event.type == sf::Event::MouseMoved)
+                ;
         }
 
         maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);

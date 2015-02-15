@@ -43,6 +43,12 @@ basetile::basetile ()
     setvertices(0, 0, 0, 0);
 }
 
+/**
+    A function used to determine which tile is highest in a basetile
+
+    @return The highest vertex of a basetile
+*/
+
 int basetile::gethighestpoint() const{
     return std::max(std::max(topheight,
                             rightheight),
