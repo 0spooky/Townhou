@@ -6,9 +6,9 @@
 #include "world.hpp"
 #include "cameraview.hpp"
 
-application::application() : mwindow(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close),
+application::application() : gameworld(generator.generateworld(512, 512)),
                              maincamera(0,-YWINDOWDIMENSION/2),
-                             gameworld(generator.generateworld(512, 512))
+                             mwindow(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close)
 {
     mwindow.setFramerateLimit(120);
 }
@@ -22,7 +22,7 @@ void application::run() {
             uppressed    = false,                                       //
             downpressed  = false;                                       //
 
-    //unsigned char zoom_level 4;                                       //Primarily for rendering purposes; currently unused
+    //unsigned int zoom_level = 4;                                       //Primarily for rendering purposes;
 
     while (mwindow.isOpen())
     {
@@ -55,6 +55,10 @@ void application::run() {
             }
             else if (event.type == sf::Event::MouseMoved)
                 ;
+            else if (event.type == sf::Event::MouseWheelMoved)
+            {
+                mgraphicsmodule.changeZoomLevel(event.mouseWheel.delta);
+            }
         }
 
         maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);

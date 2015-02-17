@@ -1,5 +1,9 @@
-#include <cmath>
+//#include <cmath>
+//#include <limits>
+#include <algorithm>
+
 #include "basetile.hpp"
+
 
 void basetile::setvertices(short left, short top, short right, short bot)
 {

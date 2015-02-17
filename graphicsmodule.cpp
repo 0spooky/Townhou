@@ -3,95 +3,82 @@
 #include "cameraview.hpp"
 #include "basetile.hpp"
 
+#include <cmath>
+
+#include <iostream>
+
 graphicsmodule::graphicsmodule() {
+
+    zoom_level = 3;
 
     maptiletex.loadFromFile("data/tiles_grass_0.png");
 
     flat_iso_tile.setTexture(maptiletex);
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
-    flat_iso_tile.setOrigin(0, 24);
 
     //Single high tiles
 
     _2_1_1_1_iso_tile.setTexture(maptiletex);
     _2_1_1_1_iso_tile.setTextureRect(sf::IntRect(0*64, 1*48, 64, 48));
-    _2_1_1_1_iso_tile.setOrigin(0, 24);
 
     _1_1_1_2_iso_tile.setTexture(maptiletex);
     _1_1_1_2_iso_tile.setTextureRect(sf::IntRect(1*64, 1*48, 64, 48));
-    _1_1_1_2_iso_tile.setOrigin(0, 24);
 
     _1_1_2_1_iso_tile.setTexture(maptiletex);
     _1_1_2_1_iso_tile.setTextureRect(sf::IntRect(2*64, 1*48, 64, 48));
-    _1_1_2_1_iso_tile.setOrigin(0, 24);
 
     _1_2_1_1_iso_tile.setTexture(maptiletex);
     _1_2_1_1_iso_tile.setTextureRect(sf::IntRect(3*64, 1*48, 64, 48));
-    _1_2_1_1_iso_tile.setOrigin(0, 24);
 
     //Full slant tiles
 
     _1_1_0_0_iso_tile.setTexture(maptiletex);
     _1_1_0_0_iso_tile.setTextureRect(sf::IntRect(0*64, 2*48, 64, 48));
-    _1_1_0_0_iso_tile.setOrigin(0, 24);
 
     _1_0_0_1_iso_tile.setTexture(maptiletex);
     _1_0_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 2*48, 64, 48));
-    _1_0_0_1_iso_tile.setOrigin(0, 24);
 
     _0_0_1_1_iso_tile.setTexture(maptiletex);
     _0_0_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 2*48, 64, 48));
-    _0_0_1_1_iso_tile.setOrigin(0, 24);
 
     _0_1_1_0_iso_tile.setTexture(maptiletex);
     _0_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 2*48, 64, 48));
-    _0_1_1_0_iso_tile.setOrigin(0, 24);
 
     //Single low tiles
 
     _1_1_0_1_iso_tile.setTexture(maptiletex);
     _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
-    _1_1_0_1_iso_tile.setOrigin(0, 24);
 
     _1_0_1_1_iso_tile.setTexture(maptiletex);
     _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
-    _1_0_1_1_iso_tile.setOrigin(0, 24);
 
     _0_1_1_1_iso_tile.setTexture(maptiletex);
     _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
-    _0_1_1_1_iso_tile.setOrigin(0, 24);
 
     _1_1_1_0_iso_tile.setTexture(maptiletex);
     _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
-    _1_1_1_0_iso_tile.setOrigin(0, 24);
 
     //Full tilt tiles
 
     _1_0_1_2_iso_tile.setTexture(maptiletex);
     _1_0_1_2_iso_tile.setTextureRect(sf::IntRect(0*64, 4*48, 64, 48));
-    _1_0_1_2_iso_tile.setOrigin(0, 24);
 
     _2_1_0_1_iso_tile.setTexture(maptiletex);
     _2_1_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 4*48, 64, 48));
-    _2_1_0_1_iso_tile.setOrigin(0, 24);
 
     _1_2_1_0_iso_tile.setTexture(maptiletex);
     _1_2_1_0_iso_tile.setTextureRect(sf::IntRect(2*64, 4*48, 64, 48));
-    _1_2_1_0_iso_tile.setOrigin(0, 24);
 
     _0_1_2_1_iso_tile.setTexture(maptiletex);
     _0_1_2_1_iso_tile.setTextureRect(sf::IntRect(3*64, 4*48, 64, 48));
-    _0_1_2_1_iso_tile.setOrigin(0, 24);
 
     //Split tiles
 
     _0_1_0_1_iso_tile.setTexture(maptiletex);
     _0_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 5*48, 64, 48));
-    _0_1_0_1_iso_tile.setOrigin(0, 24);
 
     _1_0_1_0_iso_tile.setTexture(maptiletex);
     _1_0_1_0_iso_tile.setTextureRect(sf::IntRect(1*64, 5*48, 64, 48));
-    _1_0_1_0_iso_tile.setOrigin(0, 24);
 
 }
 
@@ -186,7 +173,7 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
                     mwindow.draw(_1_1_1_0_iso_tile);
                     break;
 
-                //Full tile tiles
+                //Full tilt tiles
 
                 case (TILE1012):
                     _1_0_1_2_iso_tile.setPosition(tileposition);
@@ -224,4 +211,45 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
             }
         }
     }
+}
+
+void graphicsmodule::changeZoomLevel(int delta)
+{
+    zoom_level += delta;
+    if (zoom_level < 1)
+        zoom_level = 1;
+    if (zoom_level > 6)
+        zoom_level = 6;
+    _scaleTiles();
+
+    std::cout << zoom_level << ":" << powf(2, zoom_level-BASIC_ZOOM_LEVEL) << std::endl;
+
+}
+
+void graphicsmodule::_scaleTiles()
+{
+    flat_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    //Single high tiles
+    _2_1_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_1_1_2_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_1_2_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_2_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    //Full slant tiles
+    _0_1_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _0_0_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_0_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_1_0_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    //Single low tiles
+    _0_1_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_0_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_1_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    //Full tilt tiles
+    _1_0_1_2_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _2_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_2_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _0_1_2_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    //Split tiles
+    _1_0_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _0_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
 }
