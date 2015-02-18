@@ -10,9 +10,9 @@
 
 class application {
 
-    //The screen resolution.  TODO: Make this configurable
-    static const int XWINDOWDIMENSION = 1024;
-    static const int YWINDOWDIMENSION = 768;
+    //The screen resolution.  TODO: Make this configurable and passable to graphics module
+    static const int XWINDOWDIMENSION = 1920;
+    static const int YWINDOWDIMENSION = 960;
 
     //The game world and its generator
     worldgen generator;

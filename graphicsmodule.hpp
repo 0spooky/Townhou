@@ -11,6 +11,23 @@ class graphicsmodule {
     //The "normal" zoom level -> Used for calculations
     static const int BASIC_ZOOM_LEVEL = 3;
 
+    //The height displacement between two vertices when one is higher (normal zoom)
+    static const int HEIGHT_INCREMENTS = 8;
+
+    //The screen resolution.  TODO: Make this configurable and acquirable from application
+    static const int XWINDOWDIMENSION = 1920;
+    static const int YWINDOWDIMENSION = 960;
+
+    //The number of tiles that can be fit onscreen (normal zoom)
+    //  rounded down
+    static const int XTILESFITSCREEN = XWINDOWDIMENSION/64;
+    static const int YTILESFITSCREEN = YWINDOWDIMENSION/32;
+
+    //The number of tiles that can be fit on screen
+    //  rounded down
+    int xTilesFitScreen;
+    int yTilesFitScreen;
+
     //A Texture holding basic map tiles
     sf::Texture maptiletex;
 

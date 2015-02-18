@@ -6,9 +6,6 @@
 
 class worldgen {
 
-    //The height displacement between two vertices when one is higher
-    static const int HEIGHT_INCREMENTS = 8;
-
     //The noise generator used to randomize the map
     static PerlinNoise noisegenerator;
 

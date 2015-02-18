@@ -91,7 +91,7 @@ int basetile::gethighestpoint() const
 int basetile::reference_height() const
 {
     int refheight;
-    refheight = (int) round(((leftheight + rightheight + topheight + botheight)/8)/4)*8;
+    refheight = static_cast<int>(round((leftheight + rightheight + topheight + botheight)/4));
     return refheight;
 }
 

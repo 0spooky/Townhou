@@ -11,6 +11,11 @@ graphicsmodule::graphicsmodule() {
 
     zoom_level = 3;
 
+    scale_level = 1.0;
+
+    xTilesFitScreen = XWINDOWDIMENSION/static_cast<int>(64 * scale_level);
+    yTilesFitScreen = YWINDOWDIMENSION/static_cast<int>(32 * scale_level);
+
     maptiletex.loadFromFile("data/tiles_grass_0.png");
 
     flat_iso_tile.setTexture(maptiletex);
@@ -84,24 +89,38 @@ graphicsmodule::graphicsmodule() {
 
 void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &maincamera, const world &gameworld) {
 
-    int x1, y1;                                             //      used for algebraic purposes
+    // Used for calculating transformation matrices of x any y values
+    int x1, y1;
 
-    int   xsize = gameworld.getXsize(),                     //      The arbitrary "x" size of the game map
-          ysize = gameworld.getYsize();                     //      The arbitrary "y" size of the game map;  In theory this supports non-homologous lengths, but that'll never get implemented?
-                                                            //      Not worth making width variable, so why make height variable?
-                                                            //      Will probably take this out eventually for optimization or something
+    // The "x" size of the game map
+    // The "y" size of the game map;
+    // Will probably take this out eventually for optimization or something
+    int   xsize = gameworld.getXsize(),
+          ysize = gameworld.getYsize();
+
+    // The x and y solutions to the inverse transformation matrix [x] [ 1/64 -1/32]
+    //                                                            [y] [ 1/64  1/32]
+    // With each term multiplied by the reciprocal of scale_level (by theorem of inverse matrices)
+    int xTileStart = static_cast<int>((maincamera.getX()/64 - maincamera.getY()/32)/scale_level);
+    int yTileStart = static_cast<int>((maincamera.getX()/64 + maincamera.getY()/32)/scale_level);
 
     // see (COMMENT ID: 000001) for information about this loop
-    for(unsigned int i = std::max((maincamera.getX()/64 - maincamera.getY()/32) - 48, 0); i < std::min(xsize, ((maincamera.getX()/64 - maincamera.getY()/32) + 1920/64) + 0); i++)
+    for (int i = std::max(xTileStart - yTilesFitScreen, 0); i < std::min(xsize, xTileStart + xTilesFitScreen); i++)
     {
-
     // see (COMMENT ID: 000002) for information about this loop
-        for(unsigned int j = std::max((maincamera.getX()/64 + maincamera.getY()/32) + 0, 0); j < std::min(ysize, ((maincamera.getX()/64 + maincamera.getY()/32) + 960/32 + 48)); j++)
+        for (int j = std::max(yTileStart, 0); j < std::min(ysize, yTileStart + yTilesFitScreen + xTilesFitScreen); j++)
         {
-            x1 = 32 * (i + j);      //the x and y solutions to the transformation matrix [x] [ 32      32 ]
-            y1 = 16 * (-i + j);     //                                                   [y] [-16      16 ]
+            // The x and y solutions to the transformation matrix [x] [ 32      32 ]
+            //                                                    [y] [-16      16 ]
+            // With each term multiplied by scale_level
+            // Cast to int is not required in x1
+            //
+            // In y1 calculation, scale_level must be cast to int before it hits
+            //      (-i + j) or else implicit casting returns garbage values
+            x1 =                 (scale_level * 32) * ( i + j);
+            y1 = static_cast<int>(scale_level * 16) * (-i + j);
 
-            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - gameworld.tile(i,j).reference_height());
+            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - HEIGHT_INCREMENTS * scale_level * gameworld.tile(i,j).reference_height());
 
             switch(gameworld.tile(i,j).gettiletype()) {
 
@@ -220,36 +239,44 @@ void graphicsmodule::changeZoomLevel(int delta)
         zoom_level = 1;
     if (zoom_level > 6)
         zoom_level = 6;
+    //Scale things based off powers of 2
+    scale_level = powf(2, zoom_level - BASIC_ZOOM_LEVEL);
+
+    //Set the new number of tiles that fit onscreen
+    xTilesFitScreen = XWINDOWDIMENSION/static_cast<int>(64*scale_level);
+    yTilesFitScreen = YWINDOWDIMENSION/static_cast<int>(32*scale_level);
+
+    //Alter sprites
     _scaleTiles();
 
-    std::cout << zoom_level << ":" << powf(2, zoom_level-BASIC_ZOOM_LEVEL) << std::endl;
+    std::cout << zoom_level << ":" << powf(2, zoom_level - BASIC_ZOOM_LEVEL) << std::endl;
 
 }
 
 void graphicsmodule::_scaleTiles()
 {
-    flat_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    flat_iso_tile.setScale(scale_level, scale_level);
     //Single high tiles
-    _2_1_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_1_1_2_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_1_2_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_2_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _2_1_1_1_iso_tile.setScale(scale_level, scale_level);
+    _1_1_1_2_iso_tile.setScale(scale_level, scale_level);
+    _1_1_2_1_iso_tile.setScale(scale_level, scale_level);
+    _1_2_1_1_iso_tile.setScale(scale_level, scale_level);
     //Full slant tiles
-    _0_1_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _0_0_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_0_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_1_0_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _0_1_1_0_iso_tile.setScale(scale_level, scale_level);
+    _0_0_1_1_iso_tile.setScale(scale_level, scale_level);
+    _1_0_0_1_iso_tile.setScale(scale_level, scale_level);
+    _1_1_0_0_iso_tile.setScale(scale_level, scale_level);
     //Single low tiles
-    _0_1_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_0_1_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_1_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _0_1_1_1_iso_tile.setScale(scale_level, scale_level);
+    _1_0_1_1_iso_tile.setScale(scale_level, scale_level);
+    _1_1_0_1_iso_tile.setScale(scale_level, scale_level);
+    _1_1_1_0_iso_tile.setScale(scale_level, scale_level);
     //Full tilt tiles
-    _1_0_1_2_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _2_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _1_2_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _0_1_2_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_0_1_2_iso_tile.setScale(scale_level, scale_level);
+    _2_1_0_1_iso_tile.setScale(scale_level, scale_level);
+    _1_2_1_0_iso_tile.setScale(scale_level, scale_level);
+    _0_1_2_1_iso_tile.setScale(scale_level, scale_level);
     //Split tiles
-    _1_0_1_0_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
-    _0_1_0_1_iso_tile.setScale(powf(2, zoom_level-BASIC_ZOOM_LEVEL), powf(2, zoom_level-BASIC_ZOOM_LEVEL));
+    _1_0_1_0_iso_tile.setScale(scale_level, scale_level);
+    _0_1_0_1_iso_tile.setScale(scale_level, scale_level);
 }
