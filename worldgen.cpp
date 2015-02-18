@@ -1,6 +1,7 @@
 #include <time.h>
 #include <vector>
-#include <algorithm>
+#include <cstdlib>
+#include <cmath>
 
 #include "Noisegen.hpp"
 #include "worldgen.hpp"
