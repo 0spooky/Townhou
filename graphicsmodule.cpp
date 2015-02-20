@@ -9,15 +9,18 @@
 
 graphicsmodule::graphicsmodule() {
 
+    //Initialize simple values
     zoom_level = 3;
 
     scale_level = 1.0;
 
-    xTilesFitScreen = XWINDOWDIMENSION/static_cast<int>(64 * scale_level);
-    yTilesFitScreen = YWINDOWDIMENSION/static_cast<int>(32 * scale_level);
+    xTilesFitScreen = X_WINDOW_DIMENSION/static_cast<int>(64 * scale_level);
+    yTilesFitScreen = Y_WINDOW_DIMENSION/static_cast<int>(32 * scale_level);
 
+    //Initialize texture
     maptiletex.loadFromFile("data/tiles_grass_0.png");
 
+    //Initialize basetile sprites
     flat_iso_tile.setTexture(maptiletex);
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
 
@@ -104,7 +107,7 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
     int xTileStart = static_cast<int>((maincamera.getX()/64 - maincamera.getY()/32)/scale_level);
     int yTileStart = static_cast<int>((maincamera.getX()/64 + maincamera.getY()/32)/scale_level);
 
-    // see (COMMENT ID: 000001) for information about this loop
+    // see (COMMENT: C000001) for information about this loop
     for (int i = std::max(xTileStart - yTilesFitScreen, 0); i < std::min(xsize, xTileStart + xTilesFitScreen); i++)
     {
     // see (COMMENT ID: 000002) for information about this loop
@@ -242,9 +245,9 @@ void graphicsmodule::changeZoomLevel(int delta)
     //Scale things based off powers of 2
     scale_level = powf(2, zoom_level - BASIC_ZOOM_LEVEL);
 
-    //Set the new number of tiles that fit onscreen
-    xTilesFitScreen = XWINDOWDIMENSION/static_cast<int>(64*scale_level);
-    yTilesFitScreen = YWINDOWDIMENSION/static_cast<int>(32*scale_level);
+    //Set the new number of tiles that fit onscreen (for math)
+    xTilesFitScreen = X_WINDOW_DIMENSION/static_cast<int>(64*scale_level);
+    yTilesFitScreen = Y_WINDOW_DIMENSION/static_cast<int>(32*scale_level);
 
     //Alter sprites
     _scaleTiles();

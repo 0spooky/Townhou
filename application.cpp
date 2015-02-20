@@ -7,8 +7,8 @@
 #include "cameraview.hpp"
 
 application::application() : gameworld(generator.generateworld(512, 512)),
-                             maincamera(0,-YWINDOWDIMENSION/2),
-                             mwindow(sf::VideoMode(XWINDOWDIMENSION, YWINDOWDIMENSION), "Townhou", sf::Style::Close)
+                             maincamera(0,-Y_WINDOW_DIMENSION/2),
+                             mwindow(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close)
 {
     mwindow.setFramerateLimit(120);
 }
