@@ -33,25 +33,49 @@ void application::run() {
                 mwindow.close();
             else if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::Left)
-                    leftpressed = true;
-                if (event.key.code == sf::Keyboard::Right)
-                    rightpressed = true;
-                if (event.key.code == sf::Keyboard::Up)
-                    uppressed = true;
-                if (event.key.code == sf::Keyboard::Down)
-                    downpressed = true;
+                switch (event.key.code) {
+
+                    case (sf::Keyboard::Left):
+                        leftpressed = true;
+                        break;
+                    case (sf::Keyboard::Right):
+                        rightpressed = true;
+                        break;
+                    case (sf::Keyboard::Up):
+                        uppressed = true;
+                        break;
+                    case (sf::Keyboard::Down):
+                        downpressed = true;
+                        break;
+                    //default:
+                    //    break;
+                }
+
             }
             else if (event.type == sf::Event::KeyReleased)
             {
-                if (event.key.code == sf::Keyboard::Left)
-                    leftpressed = false;
-                if (event.key.code == sf::Keyboard::Right)
-                    rightpressed = false;
-                if (event.key.code == sf::Keyboard::Up)
-                    uppressed = false;
-                if (event.key.code == sf::Keyboard::Down)
-                    downpressed = false;
+                switch (event.key.code) {
+                    case (sf::Keyboard::Left):
+                        leftpressed = false;
+                        break;
+                    case (sf::Keyboard::Right):
+                        rightpressed = false;
+                        break;
+                    case (sf::Keyboard::Up):
+                        uppressed = false;
+                        break;
+                    case (sf::Keyboard::Down):
+                        downpressed = false;
+                        break;
+                    case (sf::Keyboard::Add):
+                        mgraphicsmodule.changeZoomLevel(1);
+                        break;
+                    case (sf::Keyboard::Subtract):
+                        mgraphicsmodule.changeZoomLevel(-1);
+                        break;
+                    default:
+                        break;
+                }
             }
             else if (event.type == sf::Event::MouseMoved)
                 ;
