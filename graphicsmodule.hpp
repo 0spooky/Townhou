@@ -26,20 +26,20 @@ class graphicsmodule {
      * Primitive variables
      */
 
-    //The screen resolution
+    //The screen resolution TODO
     //int xWindowDimension
     //int yWindowDimension
 
     //The number of tiles that can be fit on screen
     //  rounded down
-    int xTilesFitScreen;
-    int yTilesFitScreen;
+    int m_x_tiles_fit_screen;
+    int m_y_tiles_fit_screen;
 
     //A value ranging from 1 to 2*BASIC_ZOOM_LEVEL depicting how zoomed the graphics are
-    int zoom_level;
+    int m_zoom_level;
 
-    //Value calculated from zoom_level whenever zoom_level is changed
-    float scale_level;
+    //Value calculated from m_zoom_level whenever m_zoom_level is changed
+    float m_scale_level;
 
     /*
      * Class variables
@@ -49,7 +49,7 @@ class graphicsmodule {
      */
 
     //A Texture holding basic map tiles
-    sf::Texture maptiletex;
+    sf::Texture m_maptile_tex;
 
     //The Sprite of the flat isometric tile
     sf::Sprite flat_iso_tile;
@@ -69,6 +69,8 @@ class graphicsmodule {
     //The Sprites of the split-valley isometric tiles
     sf::Sprite  _0_1_0_1_iso_tile, _1_0_1_0_iso_tile;
 
+    cameraview m_main_camera;
+
     /*
      * Private functions
      */
@@ -79,8 +81,10 @@ class graphicsmodule {
 public:
     //Constructor
     graphicsmodule();
+    //Return the cameraview to manipulate from outside class
+    cameraview& getMainCamera();
     //Function to render the gameworld
-    void renderworld(sf::RenderWindow &mwindow, const cameraview &maincamera, const world &gameworld);
+    void renderWorld(sf::RenderWindow &mwindow, const world &gameworld);
     //Function to alter zoom level
     void changeZoomLevel(int delta);
 

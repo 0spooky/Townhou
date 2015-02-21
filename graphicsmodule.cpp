@@ -7,90 +7,95 @@
 
 #include <iostream>
 
-graphicsmodule::graphicsmodule() {
+graphicsmodule::graphicsmodule() : m_main_camera(0,-Y_WINDOW_DIMENSION/2){
 
     //Initialize simple values
-    zoom_level = 3;
+    m_zoom_level = 3;
 
-    scale_level = 1.0;
+    m_scale_level = 1.0;
 
-    xTilesFitScreen = X_WINDOW_DIMENSION/static_cast<int>(64 * scale_level);
-    yTilesFitScreen = Y_WINDOW_DIMENSION/static_cast<int>(32 * scale_level);
+    m_x_tiles_fit_screen = X_WINDOW_DIMENSION/static_cast<int>(64 * m_scale_level);
+    m_y_tiles_fit_screen = Y_WINDOW_DIMENSION/static_cast<int>(32 * m_scale_level);
 
     //Initialize texture
-    maptiletex.loadFromFile("data/tiles_grass_0.png");
+    m_maptile_tex.loadFromFile("data/tiles_grass_0.png");
 
     //Initialize basetile sprites
-    flat_iso_tile.setTexture(maptiletex);
+    flat_iso_tile.setTexture(m_maptile_tex);
     flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
 
     //Single high tiles
 
-    _2_1_1_1_iso_tile.setTexture(maptiletex);
+    _2_1_1_1_iso_tile.setTexture(m_maptile_tex);
     _2_1_1_1_iso_tile.setTextureRect(sf::IntRect(0*64, 1*48, 64, 48));
 
-    _1_1_1_2_iso_tile.setTexture(maptiletex);
+    _1_1_1_2_iso_tile.setTexture(m_maptile_tex);
     _1_1_1_2_iso_tile.setTextureRect(sf::IntRect(1*64, 1*48, 64, 48));
 
-    _1_1_2_1_iso_tile.setTexture(maptiletex);
+    _1_1_2_1_iso_tile.setTexture(m_maptile_tex);
     _1_1_2_1_iso_tile.setTextureRect(sf::IntRect(2*64, 1*48, 64, 48));
 
-    _1_2_1_1_iso_tile.setTexture(maptiletex);
+    _1_2_1_1_iso_tile.setTexture(m_maptile_tex);
     _1_2_1_1_iso_tile.setTextureRect(sf::IntRect(3*64, 1*48, 64, 48));
 
     //Full slant tiles
 
-    _1_1_0_0_iso_tile.setTexture(maptiletex);
+    _1_1_0_0_iso_tile.setTexture(m_maptile_tex);
     _1_1_0_0_iso_tile.setTextureRect(sf::IntRect(0*64, 2*48, 64, 48));
 
-    _1_0_0_1_iso_tile.setTexture(maptiletex);
+    _1_0_0_1_iso_tile.setTexture(m_maptile_tex);
     _1_0_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 2*48, 64, 48));
 
-    _0_0_1_1_iso_tile.setTexture(maptiletex);
+    _0_0_1_1_iso_tile.setTexture(m_maptile_tex);
     _0_0_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 2*48, 64, 48));
 
-    _0_1_1_0_iso_tile.setTexture(maptiletex);
+    _0_1_1_0_iso_tile.setTexture(m_maptile_tex);
     _0_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 2*48, 64, 48));
 
     //Single low tiles
 
-    _1_1_0_1_iso_tile.setTexture(maptiletex);
+    _1_1_0_1_iso_tile.setTexture(m_maptile_tex);
     _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
 
-    _1_0_1_1_iso_tile.setTexture(maptiletex);
+    _1_0_1_1_iso_tile.setTexture(m_maptile_tex);
     _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
 
-    _0_1_1_1_iso_tile.setTexture(maptiletex);
+    _0_1_1_1_iso_tile.setTexture(m_maptile_tex);
     _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
 
-    _1_1_1_0_iso_tile.setTexture(maptiletex);
+    _1_1_1_0_iso_tile.setTexture(m_maptile_tex);
     _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
 
     //Full tilt tiles
 
-    _1_0_1_2_iso_tile.setTexture(maptiletex);
+    _1_0_1_2_iso_tile.setTexture(m_maptile_tex);
     _1_0_1_2_iso_tile.setTextureRect(sf::IntRect(0*64, 4*48, 64, 48));
 
-    _2_1_0_1_iso_tile.setTexture(maptiletex);
+    _2_1_0_1_iso_tile.setTexture(m_maptile_tex);
     _2_1_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 4*48, 64, 48));
 
-    _1_2_1_0_iso_tile.setTexture(maptiletex);
+    _1_2_1_0_iso_tile.setTexture(m_maptile_tex);
     _1_2_1_0_iso_tile.setTextureRect(sf::IntRect(2*64, 4*48, 64, 48));
 
-    _0_1_2_1_iso_tile.setTexture(maptiletex);
+    _0_1_2_1_iso_tile.setTexture(m_maptile_tex);
     _0_1_2_1_iso_tile.setTextureRect(sf::IntRect(3*64, 4*48, 64, 48));
 
     //Split tiles
 
-    _0_1_0_1_iso_tile.setTexture(maptiletex);
+    _0_1_0_1_iso_tile.setTexture(m_maptile_tex);
     _0_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 5*48, 64, 48));
 
-    _1_0_1_0_iso_tile.setTexture(maptiletex);
+    _1_0_1_0_iso_tile.setTexture(m_maptile_tex);
     _1_0_1_0_iso_tile.setTextureRect(sf::IntRect(1*64, 5*48, 64, 48));
 
 }
 
-void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &maincamera, const world &gameworld) {
+cameraview& graphicsmodule::getMainCamera()
+{
+    return m_main_camera;
+}
+
+void graphicsmodule::renderWorld(sf::RenderWindow &mwindow, const world &gameworld) {
 
     // Used for calculating transformation matrices of x any y values
     int x1, y1;
@@ -103,29 +108,37 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
 
     // The x and y solutions to the inverse transformation matrix [x] [ 1/64 -1/32]
     //                                                            [y] [ 1/64  1/32]
-    // With each term multiplied by the reciprocal of scale_level (by theorem of inverse matrices)
-    int xTileStart = static_cast<int>((maincamera.getX()/64 - maincamera.getY()/32)/scale_level);
-    int yTileStart = static_cast<int>((maincamera.getX()/64 + maincamera.getY()/32)/scale_level);
+    // With each term multiplied by the reciprocal of m_scale_level (by theorem of inverse matrices)
+    int xTileTopLeft = static_cast<int>((m_main_camera.getX()/64 - m_main_camera.getY()/32)/m_scale_level);
+    int yTileTopLeft = static_cast<int>((m_main_camera.getX()/64 + m_main_camera.getY()/32)/m_scale_level);
+
+    // Precalculate the start and stop points
+    // TODO CHANGE THIS TO MAKE IT SO THAT ONLY SEEN TILES ARE DRAWN INSTEAD OF OVERLAYED SQUARE?
+    int xTileStart = std::max(xTileTopLeft - m_y_tiles_fit_screen, 0);
+    int xTileEnd   = std::min(xsize, xTileTopLeft + m_x_tiles_fit_screen);
+
+    int yTileStart = std::max(yTileTopLeft, 0);
+    int yTileEnd   = std::min(ysize, yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen);
 
     // see (COMMENT: C000001) for information about this loop
-    for (int i = std::max(xTileStart - yTilesFitScreen, 0); i < std::min(xsize, xTileStart + xTilesFitScreen); i++)
+    for (int i = xTileStart; i < xTileEnd; i++)
     {
     // see (COMMENT ID: 000002) for information about this loop
-        for (int j = std::max(yTileStart, 0); j < std::min(ysize, yTileStart + yTilesFitScreen + xTilesFitScreen); j++)
+        for (int j = yTileStart; j < yTileEnd; j++)
         {
             // The x and y solutions to the transformation matrix [x] [ 32      32 ]
             //                                                    [y] [-16      16 ]
-            // With each term multiplied by scale_level
+            // With each term multiplied by m_scale_level
             // Cast to int is not required in x1
             //
-            // In y1 calculation, scale_level must be cast to int before it hits
+            // In y1 calculation, m_scale_level must be cast to int before it hits
             //      (-i + j) or else implicit casting returns garbage values
-            x1 =                 (scale_level * 32) * ( i + j);
-            y1 = static_cast<int>(scale_level * 16) * (-i + j);
+            x1 =                 (m_scale_level * 32) * ( i + j);
+            y1 = static_cast<int>(m_scale_level * 16) * (-i + j);
 
-            sf::Vector2f tileposition(x1 - maincamera.getX(), y1 - maincamera.getY() - HEIGHT_INCREMENTS * scale_level * gameworld.tile(i,j).reference_height());
+            sf::Vector2f tileposition(x1 - m_main_camera.getX(), y1 - m_main_camera.getY() - HEIGHT_INCREMENTS * m_scale_level * gameworld.tile(i,j).referenceHeight());
 
-            switch(gameworld.tile(i,j).gettiletype()) {
+            switch(gameworld.tile(i,j).getTileType()) {
 
                 case (TILEFLAT):
                     flat_iso_tile.setPosition(tileposition);
@@ -237,49 +250,49 @@ void graphicsmodule::renderworld(sf::RenderWindow &mwindow, const cameraview &ma
 
 void graphicsmodule::changeZoomLevel(int delta)
 {
-    zoom_level += delta;
-    if (zoom_level < 1)
-        zoom_level = 1;
-    if (zoom_level > 6)
-        zoom_level = 6;
+    if (m_zoom_level < 6 && delta > 0)
+        m_zoom_level++;
+    else if (m_zoom_level > 1 && delta < 0)
+        m_zoom_level--;
+
     //Scale things based off powers of 2
-    scale_level = powf(2, zoom_level - BASIC_ZOOM_LEVEL);
+    m_scale_level = powf(2, m_zoom_level - BASIC_ZOOM_LEVEL);
 
     //Set the new number of tiles that fit onscreen (for math)
-    xTilesFitScreen = X_WINDOW_DIMENSION/static_cast<int>(64*scale_level);
-    yTilesFitScreen = Y_WINDOW_DIMENSION/static_cast<int>(32*scale_level);
+    m_x_tiles_fit_screen = X_WINDOW_DIMENSION/static_cast<int>(64*m_scale_level);
+    m_y_tiles_fit_screen = Y_WINDOW_DIMENSION/static_cast<int>(32*m_scale_level);
+
+    m_main_camera.setZoomLevel(m_zoom_level);
 
     //Alter sprites
     _scaleTiles();
-
-    std::cout << zoom_level << ":" << powf(2, zoom_level - BASIC_ZOOM_LEVEL) << std::endl;
 
 }
 
 void graphicsmodule::_scaleTiles()
 {
-    flat_iso_tile.setScale(scale_level, scale_level);
+    flat_iso_tile.setScale(m_scale_level, m_scale_level);
     //Single high tiles
-    _2_1_1_1_iso_tile.setScale(scale_level, scale_level);
-    _1_1_1_2_iso_tile.setScale(scale_level, scale_level);
-    _1_1_2_1_iso_tile.setScale(scale_level, scale_level);
-    _1_2_1_1_iso_tile.setScale(scale_level, scale_level);
+    _2_1_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_1_1_2_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_1_2_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_2_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
     //Full slant tiles
-    _0_1_1_0_iso_tile.setScale(scale_level, scale_level);
-    _0_0_1_1_iso_tile.setScale(scale_level, scale_level);
-    _1_0_0_1_iso_tile.setScale(scale_level, scale_level);
-    _1_1_0_0_iso_tile.setScale(scale_level, scale_level);
+    _0_1_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
+    _0_0_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_0_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_1_0_0_iso_tile.setScale(m_scale_level, m_scale_level);
     //Single low tiles
-    _0_1_1_1_iso_tile.setScale(scale_level, scale_level);
-    _1_0_1_1_iso_tile.setScale(scale_level, scale_level);
-    _1_1_0_1_iso_tile.setScale(scale_level, scale_level);
-    _1_1_1_0_iso_tile.setScale(scale_level, scale_level);
+    _0_1_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_0_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_1_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
     //Full tilt tiles
-    _1_0_1_2_iso_tile.setScale(scale_level, scale_level);
-    _2_1_0_1_iso_tile.setScale(scale_level, scale_level);
-    _1_2_1_0_iso_tile.setScale(scale_level, scale_level);
-    _0_1_2_1_iso_tile.setScale(scale_level, scale_level);
+    _1_0_1_2_iso_tile.setScale(m_scale_level, m_scale_level);
+    _2_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    _1_2_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
+    _0_1_2_1_iso_tile.setScale(m_scale_level, m_scale_level);
     //Split tiles
-    _1_0_1_0_iso_tile.setScale(scale_level, scale_level);
-    _0_1_0_1_iso_tile.setScale(scale_level, scale_level);
+    _1_0_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
+    _0_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
 }

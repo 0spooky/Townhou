@@ -7,14 +7,14 @@
 class worldgen {
 
     //The noise generator used to randomize the map
-    static PerlinNoise noisegenerator;
+    static PerlinNoise m_noise_generator;
 
 public:
     //Constructor
     worldgen();
 
     //A function to generate a new world
-    world generateworld(int xsize, int ysize);
+    world generateWorld(int xsize, int ysize);
 
 };
 

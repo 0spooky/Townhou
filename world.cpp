@@ -6,7 +6,7 @@ world::world()
 
 }
 
-world::world(const world& genworld)
+world::world(const world& _genworld)
 {
-    basetile_data = genworld.basetile_data;
+    m_basetile_data = _genworld.m_basetile_data;
 }

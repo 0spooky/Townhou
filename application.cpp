@@ -6,90 +6,94 @@
 #include "world.hpp"
 #include "cameraview.hpp"
 
-application::application() : gameworld(generator.generateworld(512, 512)),
-                             maincamera(0,-Y_WINDOW_DIMENSION/2),
-                             mwindow(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close)
+application::application() : m_game_world(m_generator.generateWorld(512, 512)),
+                             m_window(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close)
 {
-    mwindow.setFramerateLimit(120);
+    m_window.setFramerateLimit(120);
 }
 
 void application::run() {
 
-    //srand (time(NULL));
+    //These are intended for seamless scrolling
+    //TODO: Delegate to input class/function?
+    bool    left_pressed  = false,
+            right_pressed = false,
+            up_pressed    = false,
+            down_pressed  = false;
 
-    bool    leftpressed  = false,                                       //These are used for seamless scrolling
-            rightpressed = false,                                       //
-            uppressed    = false,                                       //
-            downpressed  = false;                                       //
-
-    //unsigned int zoom_level = 4;                                       //Primarily for rendering purposes;
-
-    while (mwindow.isOpen())
+    while (m_window.isOpen())
     {
         sf::Event event;
-        while (mwindow.pollEvent(event))
+        while (m_window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                mwindow.close();
-            else if (event.type == sf::Event::KeyPressed)
-            {
-                switch (event.key.code) {
+            switch (event.type) {
+                case (sf::Event::Closed):
+                    m_window.close();
+                    break;
 
-                    case (sf::Keyboard::Left):
-                        leftpressed = true;
-                        break;
-                    case (sf::Keyboard::Right):
-                        rightpressed = true;
-                        break;
-                    case (sf::Keyboard::Up):
-                        uppressed = true;
-                        break;
-                    case (sf::Keyboard::Down):
-                        downpressed = true;
-                        break;
-                    //default:
-                    //    break;
-                }
+                case (sf::Event::KeyPressed):
+                    switch (event.key.code) {
 
-            }
-            else if (event.type == sf::Event::KeyReleased)
-            {
-                switch (event.key.code) {
-                    case (sf::Keyboard::Left):
-                        leftpressed = false;
-                        break;
-                    case (sf::Keyboard::Right):
-                        rightpressed = false;
-                        break;
-                    case (sf::Keyboard::Up):
-                        uppressed = false;
-                        break;
-                    case (sf::Keyboard::Down):
-                        downpressed = false;
-                        break;
-                    case (sf::Keyboard::Add):
-                        mgraphicsmodule.changeZoomLevel(1);
-                        break;
-                    case (sf::Keyboard::Subtract):
-                        mgraphicsmodule.changeZoomLevel(-1);
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (event.type == sf::Event::MouseMoved)
-                ;
-            else if (event.type == sf::Event::MouseWheelMoved)
-            {
-                mgraphicsmodule.changeZoomLevel(event.mouseWheel.delta);
+                        case (sf::Keyboard::Left):
+                            left_pressed = true;
+                            break;
+                        case (sf::Keyboard::Right):
+                            right_pressed = true;
+                            break;
+                        case (sf::Keyboard::Up):
+                            up_pressed = true;
+                            break;
+                        case (sf::Keyboard::Down):
+                            down_pressed = true;
+                            break;
+                        case (sf::Keyboard::Add):
+                            m_graphics_module.changeZoomLevel(1);
+                            break;
+                        case (sf::Keyboard::Subtract):
+                            m_graphics_module.changeZoomLevel(-1);
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case (sf::Event::KeyReleased):
+                    switch (event.key.code) {
+                        case (sf::Keyboard::Left):
+                            left_pressed = false;
+                            break;
+                        case (sf::Keyboard::Right):
+                            right_pressed = false;
+                            break;
+                        case (sf::Keyboard::Up):
+                            up_pressed = false;
+                            break;
+                        case (sf::Keyboard::Down):
+                            down_pressed = false;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+                case (sf::Event::MouseMoved):
+                    break;
+
+                case (sf::Event::MouseWheelMoved):
+                    m_graphics_module.changeZoomLevel(event.mouseWheel.delta);
+                    break;
+
+                default:
+                    break;
             }
         }
 
-        maincamera.changeview(uppressed, downpressed, leftpressed, rightpressed);
+        if (up_pressed || down_pressed || left_pressed || right_pressed)
+            m_graphics_module.getMainCamera().changeView(up_pressed, down_pressed, left_pressed, right_pressed);
 
-        mwindow.clear();
-        mgraphicsmodule.renderworld(mwindow, maincamera, gameworld);
-        mwindow.display();
+        m_window.clear();
+        m_graphics_module.renderWorld(m_window, m_game_world);
+        m_window.display();
     }
 
 }

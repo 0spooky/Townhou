@@ -15,17 +15,14 @@ class application {
     static const int Y_WINDOW_DIMENSION = 960;
 
     //The game world and its generator
-    worldgen generator;
-    world gameworld;
-
-    //The main camera view.  Are viewpoints possible?
-    cameraview maincamera;
+    worldgen m_generator;
+    world m_game_world;
 
     //The main display window
-    sf::RenderWindow mwindow;                   //Put this above world generator to have the screen the first thing generated;  Might be useful later for load screens
+    sf::RenderWindow m_window;                   //Put this above world generator to have the screen the first thing generated;  Might be useful later for load screens
 
     //The graphics renderer
-    graphicsmodule mgraphicsmodule;
+    graphicsmodule m_graphics_module;
 
 public:
 

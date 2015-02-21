@@ -7,36 +7,36 @@ public:
 
   // Constructor
     PerlinNoise();
-    PerlinNoise(double _persistence, double _frequency, double _amplitude, int _octaves, int _randomseed);
+    PerlinNoise(double _persistence, double _frequency, double _amplitude, int _octaves, int _random_seed);
 
   // Get Height
-    double GetHeight(double x, double y) const;
+    double getHeight(double x, double y) const;
 
   // Get
-    double getPersistence() const { return persistence; }
-    double getFrequency()   const { return frequency;   }
-    double getAmplitude()   const { return amplitude;   }
-    int    getOctaves()     const { return octaves;     }
-    int    getRandomSeed()  const { return randomseed;  }
+    double getPersistence() const { return m_persistence; }
+    double getFrequency()   const { return m_frequency;   }
+    double getAmplitude()   const { return m_amplitude;   }
+    int    getOctaves()     const { return m_octaves;     }
+    int    getRandomSeed()  const { return m_random_seed;  }
 
   // Set
-    void Set(double _persistence, double _frequency, double _amplitude, int _octaves, int _randomseed);
+    void set(double _persistence, double _frequency, double _amplitude, int _octaves, int _random_seed);
 
-    void SetPersistence(double _persistence) { persistence = _persistence; }
-    void SetFrequency(  double _frequency)   { frequency = _frequency;     }
-    void SetAmplitude(  double _amplitude)   { amplitude = _amplitude;     }
-    void SetOctaves(    int    _octaves)     { octaves = _octaves;         }
-    void SetRandomSeed( int    _randomseed)  { randomseed = _randomseed;   }
+    void setPersistence(double _persistence) { m_persistence = _persistence; }
+    void setFrequency(  double _frequency)   { m_frequency = _frequency;     }
+    void setAmplitude(  double _amplitude)   { m_amplitude = _amplitude;     }
+    void setOctaves(    int    _octaves)     { m_octaves = _octaves;         }
+    void setRandomSeed( int    _random_seed)  { m_random_seed = _random_seed;   }
 
 private:
 
-    double Total(double i, double j) const;
-    double GetValue(double x, double y) const;
-    double Interpolate(double x, double y, double a) const;
-    double Noise(int x, int y) const;
+    double total(double i, double j) const;
+    double getValue(double x, double y) const;
+    double interpolate(double x, double y, double a) const;
+    double noise(int x, int y) const;
 
-    double persistence, frequency, amplitude;
-    int octaves, randomseed;
+    double m_persistence, m_frequency, m_amplitude;
+    int m_octaves, m_random_seed;
 
 };
 

@@ -1,76 +1,75 @@
-#include <cmath>
-#include <algorithm>
+#include <cmath> //round
+#include <algorithm> //max
 
 #include "basetile.hpp"
 
-
-void basetile::setvertices(short left, short top, short right, short bot)
+void basetile::setVertices(int _left, int _top, int _right, int _bot)
 {
-    leftheight  = left;
-    topheight   = top;
-    rightheight = right;
-    botheight   = bot;
-    if      ((left == top) && (top == right) && (right == bot))
-        typeoftile = TILEFLAT;
+    m_left_height  = _left;
+    m_top_height   = _top;
+    m_right_height = _right;
+    m_bot_height   = _bot;
+    if      ((_left == _top) && (_top == _right) && (_right == _bot))
+        type_of_tile = TILEFLAT;
 
-    else if ((left >  top) && (top == right) && (right == bot))
-        typeoftile = TILE2111;
-    else if ((left == top) && (top == right) && (right <  bot))
-        typeoftile = TILE1112;
-    else if ((left == top) && (top <  right) && (right >  bot))
-        typeoftile = TILE1121;
-    else if ((left <  top) && (top >  right) && (right == bot))
-        typeoftile = TILE1211;
+    else if ((_left >  _top) && (_top == _right) && (_right == _bot))
+        type_of_tile = TILE2111;
+    else if ((_left == _top) && (_top == _right) && (_right <  _bot))
+        type_of_tile = TILE1112;
+    else if ((_left == _top) && (_top <  _right) && (_right >  _bot))
+        type_of_tile = TILE1121;
+    else if ((_left <  _top) && (_top >  _right) && (_right == _bot))
+        type_of_tile = TILE1211;
 
-    else if ((left <  top) && (top == right) && (right == bot))
-        typeoftile = TILE0111;
-    else if ((left >  top) && (top <  right) && (right == bot))
-        typeoftile = TILE1011;
-    else if ((left == top) && (top >  right) && (right <  bot))
-        typeoftile = TILE1101;
-    else if ((left == top) && (top == right) && (right >  bot))
-        typeoftile = TILE1110;
+    else if ((_left <  _top) && (_top == _right) && (_right == _bot))
+        type_of_tile = TILE0111;
+    else if ((_left >  _top) && (_top <  _right) && (_right == _bot))
+        type_of_tile = TILE1011;
+    else if ((_left == _top) && (_top >  _right) && (_right <  _bot))
+        type_of_tile = TILE1101;
+    else if ((_left == _top) && (_top == _right) && (_right >  _bot))
+        type_of_tile = TILE1110;
 
-    else if ((left <  top) && (top == right) && (right >  bot))
-        typeoftile = TILE0110;
-    else if ((left == top) && (top <  right) && (right == bot))
-        typeoftile = TILE0011;
-    else if ((left >  top) && (top == right) && (right <  bot))
-        typeoftile = TILE1001;
-    else if ((left == top) && (top >  right) && (right == bot))
-        typeoftile = TILE1100;
+    else if ((_left <  _top) && (_top == _right) && (_right >  _bot))
+        type_of_tile = TILE0110;
+    else if ((_left == _top) && (_top <  _right) && (_right == _bot))
+        type_of_tile = TILE0011;
+    else if ((_left >  _top) && (_top == _right) && (_right <  _bot))
+        type_of_tile = TILE1001;
+    else if ((_left == _top) && (_top >  _right) && (_right == _bot))
+        type_of_tile = TILE1100;
 
-    else if ((left >  top) && (top <  right) && (right <  bot))
-        typeoftile = TILE1012;
-    else if ((left >  top) && (top >  right) && (right <  bot))
-        typeoftile = TILE2101;
-    else if ((left <  top) && (top >  right) && (right >  bot))
-        typeoftile = TILE1210;
-    else if ((left <  top) && (top <  right) && (right >  bot))
-        typeoftile = TILE0121;
+    else if ((_left >  _top) && (_top <  _right) && (_right <  _bot))
+        type_of_tile = TILE1012;
+    else if ((_left >  _top) && (_top >  _right) && (_right <  _bot))
+        type_of_tile = TILE2101;
+    else if ((_left <  _top) && (_top >  _right) && (_right >  _bot))
+        type_of_tile = TILE1210;
+    else if ((_left <  _top) && (_top <  _right) && (_right >  _bot))
+        type_of_tile = TILE0121;
 
-    else if ((left <  top) && (top >  right) && (right <  bot))
-        typeoftile = TILE0101;
-    else if ((left >  top) && (top <  right) && (right >  bot))
-        typeoftile = TILE1010;
+    else if ((_left <  _top) && (_top >  _right) && (_right <  _bot))
+        type_of_tile = TILE0101;
+    else if ((_left >  _top) && (_top <  _right) && (_right >  _bot))
+        type_of_tile = TILE1010;
 
     else
-        typeoftile = TILENULL;
+        type_of_tile = TILENULL;
 }
 
-basetile::basetile (short left, short top, short right, short bot)
+basetile::basetile (int _left, int _top, int _right, int _bot)
 {
-    setvertices(left, top, right, bot);
+    setVertices(_left, _top, _right, _bot);
 }
 
-basetile::basetile (short height)
+basetile::basetile (int _height)
 {
-    setvertices(height, height, height, height);
+    setVertices(_height, _height, _height, _height);
 }
 
 basetile::basetile ()
 {
-    setvertices(0, 0, 0, 0);
+    setVertices(0, 0, 0, 0);
 }
 
 /**
@@ -79,22 +78,17 @@ basetile::basetile ()
     @return The highest vertex of a basetile
 */
 
-int basetile::gethighestpoint() const
+int basetile::getHighestPoint() const
 {
-    return std::max(std::max(topheight,
-                            rightheight),
-                    std::max(botheight,
-                            leftheight));
+    return std::max(std::max(m_top_height,
+                            m_right_height),
+                    std::max(m_bot_height,
+                            m_left_height));
 }
 
-int basetile::reference_height() const
+int basetile::referenceHeight() const
 {
     int refheight;
-    refheight = static_cast<int>(round((leftheight + rightheight + topheight + botheight)/4));
+    refheight = static_cast<int>(round((m_left_height + m_right_height + m_top_height + m_bot_height)/4));
     return refheight;
-}
-
-tiletype basetile::gettiletype() const
-{
-    return typeoftile;
 }
