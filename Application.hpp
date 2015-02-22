@@ -3,14 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "WorldGenerator.hpp"
-#include "World.hpp"
-#include "GraphicsModule.hpp"
 #include "CameraView.hpp"
+#include "GraphicsModule.hpp"
+#include "World.hpp"
+#include "WorldGenerator.hpp"
 
 class Application {
 
-    //The screen resolution.  TODO: Make this configurable and passable to graphics module
+    //The screen resolution.  TODO: Make this configurable
     static const int X_WINDOW_DIMENSION = 1920;
     static const int Y_WINDOW_DIMENSION = 960;
 

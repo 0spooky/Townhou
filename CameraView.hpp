@@ -5,12 +5,12 @@
 
 class CameraView {
 
-    //The screen resolution.  TODO: Make this configurable and acquirable from application/graphics module
-    static const int X_WINDOW_DIMENSION = 1920;
-    static const int Y_WINDOW_DIMENSION = 960;
-
     //The speed which the camera scrolls.  TODO: Should this be configurable?
     static const int SCROLL_SPEED = 12;
+
+    //The screen resolution TODO
+    int xWindowDimension;
+    int yWindowDimension;
 
     //The current level of zoom of the camera
     int m_zoom_level;
@@ -21,8 +21,8 @@ class CameraView {
 public:
 
     //Constructors
-    CameraView();
-    CameraView(int x, int y);
+    CameraView(int _xWindowDimension, int _yWindowDimension);
+    CameraView(int _xWindowDimension, int _yWindowDimension, int x, int y);
 
     //Functions to return the camera's position
     int getX() const {return m_viewpoint.x;}
@@ -39,6 +39,9 @@ public:
 
     //A function to set the zoom level of the camera
     void setZoomLevel(int _zoom_level);
+
+    //A function to set the camera's dimensions
+    void setWindowDimensions(int _xWindowDimension, int _yWindowDimension);
 };
 
 #endif // CAMERA_HPP_INCLUDED

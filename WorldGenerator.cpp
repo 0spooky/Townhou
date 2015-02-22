@@ -1,10 +1,10 @@
+#include <cmath> //floor
+#include <cstdlib> //rand
 #include <time.h>
 #include <vector>
-#include <cstdlib> //rand
-#include <cmath> //floor
 
-#include "NoiseGenerator.hpp"
 #include "Basetile.hpp"
+#include "NoiseGenerator.hpp"
 #include "WorldGenerator.hpp"
 
 PerlinNoise WorldGenerator::m_noise_generator;

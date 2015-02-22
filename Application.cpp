@@ -1,13 +1,15 @@
+#include "stdlib.h"
+
 #include <SFML/Graphics.hpp>
 
-#include "stdlib.h"
 #include "Application.hpp"
+#include "CameraView.hpp"
 #include "WorldGenerator.hpp"
 #include "World.hpp"
-#include "CameraView.hpp"
 
 Application::Application() : m_game_world(m_generator.generateWorld(512, 512)),
-                             m_window(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close)
+                             m_window(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close),
+                             m_graphics_module(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION)
 {
     m_window.setFramerateLimit(120);
 }

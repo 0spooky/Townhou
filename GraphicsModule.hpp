@@ -1,10 +1,10 @@
 #ifndef GRAPHICSMODULE_HPP_INCLUDED
 #define GRAPHICSMODULE_HPP_INCLUDED
-
 #include <SFML/Graphics.hpp>
-#include "World.hpp"
-#include "CameraView.hpp"
+
 #include "Basetile.hpp"
+#include "CameraView.hpp"
+#include "World.hpp"
 
 class GraphicsModule {
 
@@ -17,18 +17,13 @@ class GraphicsModule {
 
     //The height displacement between two vertices when one is higher (normal zoom)
     static const int HEIGHT_INCREMENTS = 8;
-
-    //The screen resolution.  TODO: Make this configurable and acquirable from application
-    static const int X_WINDOW_DIMENSION = 1920;
-    static const int Y_WINDOW_DIMENSION = 960;
-
     /*
      * Primitive variables
      */
 
-    //The screen resolution TODO
-    //int xWindowDimension
-    //int yWindowDimension
+    //The screen resolution
+    int xWindowDimension;
+    int yWindowDimension;
 
     //The number of tiles that can be fit on screen
     //  rounded down
@@ -80,7 +75,7 @@ class GraphicsModule {
 
 public:
     //Constructor
-    GraphicsModule();
+    GraphicsModule(int _xWindowDimension, int _yWindowDimension);
     //Return the cameraview to manipulate from outside class
     CameraView& getMainCamera();
     //Function to render the gameworld

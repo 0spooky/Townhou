@@ -2,6 +2,7 @@
 #define WORLD_HPP_INCLUDED
 
 #include <vector>
+
 #include "Basetile.hpp"
 
 class World {
