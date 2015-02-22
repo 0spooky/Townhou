@@ -1,20 +1,20 @@
 #ifndef WORLDGEN_HPP_INCLUDED
 #define WORLDGEN_HPP_INCLUDED
 
-#include "Noisegen.hpp"
-#include "world.hpp"
+#include "NoiseGenerator.hpp"
+#include "World.hpp"
 
-class worldgen {
+class WorldGenerator {
 
     //The noise generator used to randomize the map
     static PerlinNoise m_noise_generator;
 
 public:
     //Constructor
-    worldgen();
+    WorldGenerator();
 
     //A function to generate a new world
-    world generateWorld(int xsize, int ysize);
+    World generateWorld(int xsize, int ysize);
 
 };
 

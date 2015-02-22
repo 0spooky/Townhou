@@ -2,11 +2,11 @@
 #define GRAPHICSMODULE_HPP_INCLUDED
 
 #include <SFML/Graphics.hpp>
-#include "world.hpp"
-#include "cameraview.hpp"
-#include "basetile.hpp"
+#include "World.hpp"
+#include "CameraView.hpp"
+#include "Basetile.hpp"
 
-class graphicsmodule {
+class GraphicsModule {
 
     /*
      * Constant values
@@ -20,7 +20,7 @@ class graphicsmodule {
 
     //The screen resolution.  TODO: Make this configurable and acquirable from application
     static const int X_WINDOW_DIMENSION = 1920;
-    static const int Y_WINDOW_DIMENSION = 1080;
+    static const int Y_WINDOW_DIMENSION = 960;
 
     /*
      * Primitive variables
@@ -69,7 +69,7 @@ class graphicsmodule {
     //The Sprites of the split-valley isometric tiles
     sf::Sprite  _0_1_0_1_iso_tile, _1_0_1_0_iso_tile;
 
-    cameraview m_main_camera;
+    CameraView m_main_camera;
 
     /*
      * Private functions
@@ -80,11 +80,11 @@ class graphicsmodule {
 
 public:
     //Constructor
-    graphicsmodule();
+    GraphicsModule();
     //Return the cameraview to manipulate from outside class
-    cameraview& getMainCamera();
+    CameraView& getMainCamera();
     //Function to render the gameworld
-    void renderWorld(sf::RenderWindow &mwindow, const world &gameworld);
+    void renderWorld(sf::RenderWindow &mwindow, const World &gameworld);
     //Function to alter zoom level
     void changeZoomLevel(int delta);
 

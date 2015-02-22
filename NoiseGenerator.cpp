@@ -1,5 +1,6 @@
 #include <cmath>
-#include "Noisegen.hpp"
+
+#include "NoiseGenerator.hpp"
 
 PerlinNoise::PerlinNoise()
 {

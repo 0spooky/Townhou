@@ -3,7 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
-class cameraview {
+class CameraView {
 
     //The screen resolution.  TODO: Make this configurable and acquirable from application/graphics module
     static const int X_WINDOW_DIMENSION = 1920;
@@ -21,8 +21,8 @@ class cameraview {
 public:
 
     //Constructors
-    cameraview();
-    cameraview(int x, int y);
+    CameraView();
+    CameraView(int x, int y);
 
     //Functions to return the camera's position
     int getX() const {return m_viewpoint.x;}
@@ -38,7 +38,7 @@ public:
     void setDeltaView(int x, int y);
 
     //A function to set the zoom level of the camera
-    void setZoomLevel(int zoom_level);
+    void setZoomLevel(int _zoom_level);
 };
 
 #endif // CAMERA_HPP_INCLUDED

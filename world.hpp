@@ -2,28 +2,28 @@
 #define WORLD_HPP_INCLUDED
 
 #include <vector>
-#include "basetile.hpp"
+#include "Basetile.hpp"
 
-class world {
-    //Allow worldgen to alter m_basetile_data when generating a new world
-    friend class worldgen;
+class World {
+    //Allow WorldGenerator to alter m_basetile_data when generating a new World
+    friend class WorldGenerator;
 
-    //A vector of vectors to simulate a world matrix of basetiles
-    std::vector < std::vector <basetile> > m_basetile_data;
+    //A vector of vectors to simulate a World matrix of basetiles
+    std::vector < std::vector <Basetile> > m_basetile_data;
 
-    //Hidden constructor used by worldgen class
-    world();
+    //Hidden constructor used by WorldGenerator class
+    World();
 public:
 
-    //Normal constructor (copy) called with world(worldgen::generateworld(x, y)
-    world(const world& _genworld);
+    //Normal constructor (copy) called with World(WorldGenerator::generateWorld(x, y)
+    World(const World& _generated_world);
 
-    //Functions to return dimensions of the world. TODO: Make these new parameters.  Why calculate every time?
+    //Functions to return dimensions of the World. TODO: Make these new parameters.  Why calculate every time?
     int getXsize() const {return m_basetile_data[0].size();}
     int getYsize() const {return m_basetile_data.size();}
 
     //Return the tile at position (x, y)
-    basetile tile(int x, int y) const {return m_basetile_data[x][y];}
+    Basetile tile(int x, int y) const {return m_basetile_data[x][y];}
 };
 
 #endif // WORLD_HPP_INCLUDED

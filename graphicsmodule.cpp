@@ -1,13 +1,13 @@
-#include "graphicsmodule.hpp"
-#include "world.hpp"
-#include "cameraview.hpp"
-#include "basetile.hpp"
-
 #include <cmath>
 
 #include <iostream>
 
-graphicsmodule::graphicsmodule() : m_main_camera(0,-Y_WINDOW_DIMENSION/2){
+#include "GraphicsModule.hpp"
+#include "World.hpp"
+#include "CameraView.hpp"
+#include "Basetile.hpp"
+
+GraphicsModule::GraphicsModule() : m_main_camera(0,-Y_WINDOW_DIMENSION/2){
 
     //Initialize simple values
     m_zoom_level = 3;
@@ -90,12 +90,12 @@ graphicsmodule::graphicsmodule() : m_main_camera(0,-Y_WINDOW_DIMENSION/2){
 
 }
 
-cameraview& graphicsmodule::getMainCamera()
+CameraView& GraphicsModule::getMainCamera()
 {
     return m_main_camera;
 }
 
-void graphicsmodule::renderWorld(sf::RenderWindow &mwindow, const world &gameworld) {
+void GraphicsModule::renderWorld(sf::RenderWindow &mwindow, const World &gameworld) {
 
     // Used for calculating transformation matrices of x any y values
     int x1, y1;
@@ -132,7 +132,7 @@ void graphicsmodule::renderWorld(sf::RenderWindow &mwindow, const world &gamewor
             // Cast to int is not required in x1
             //
             // In y1 calculation, m_scale_level must be cast to int before it hits
-            //      (-i + j) or else implicit casting returns garbage values
+            //      (-i + j) or else implicit casting of negative float returns garbage values
             x1 =                 (m_scale_level * 32) * ( i + j);
             y1 = static_cast<int>(m_scale_level * 16) * (-i + j);
 
@@ -248,7 +248,7 @@ void graphicsmodule::renderWorld(sf::RenderWindow &mwindow, const world &gamewor
     }
 }
 
-void graphicsmodule::changeZoomLevel(int delta)
+void GraphicsModule::changeZoomLevel(int delta)
 {
     if (m_zoom_level < 6 && delta > 0)
         m_zoom_level++;
@@ -269,7 +269,7 @@ void graphicsmodule::changeZoomLevel(int delta)
 
 }
 
-void graphicsmodule::_scaleTiles()
+void GraphicsModule::_scaleTiles()
 {
     flat_iso_tile.setScale(m_scale_level, m_scale_level);
     //Single high tiles

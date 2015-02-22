@@ -1,9 +1,9 @@
 #include <cmath> //round
 #include <algorithm> //max
 
-#include "basetile.hpp"
+#include "Basetile.hpp"
 
-void basetile::setVertices(int _left, int _top, int _right, int _bot)
+void Basetile::setVertices(int _left, int _top, int _right, int _bot)
 {
     m_left_height  = _left;
     m_top_height   = _top;
@@ -57,28 +57,28 @@ void basetile::setVertices(int _left, int _top, int _right, int _bot)
         type_of_tile = TILENULL;
 }
 
-basetile::basetile (int _left, int _top, int _right, int _bot)
+Basetile::Basetile (int _left, int _top, int _right, int _bot)
 {
     setVertices(_left, _top, _right, _bot);
 }
 
-basetile::basetile (int _height)
+Basetile::Basetile (int _height)
 {
     setVertices(_height, _height, _height, _height);
 }
 
-basetile::basetile ()
+Basetile::Basetile ()
 {
     setVertices(0, 0, 0, 0);
 }
 
 /**
-    A function used to determine which tile is highest in a basetile
+    A function used to determine which tile is highest in a Basetile
 
-    @return The highest vertex of a basetile
+    @return The highest vertex of a Basetile
 */
 
-int basetile::getHighestPoint() const
+int Basetile::getHighestPoint() const
 {
     return std::max(std::max(m_top_height,
                             m_right_height),
@@ -86,7 +86,7 @@ int basetile::getHighestPoint() const
                             m_left_height));
 }
 
-int basetile::referenceHeight() const
+int Basetile::referenceHeight() const
 {
     int refheight;
     refheight = static_cast<int>(round((m_left_height + m_right_height + m_top_height + m_bot_height)/4));

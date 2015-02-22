@@ -1,12 +1,12 @@
 
-#include "world.hpp"
+#include "World.hpp"
 
-world::world()
+World::World()
 {
 
 }
 
-world::world(const world& _genworld)
+World::World(const World& _generated_world)
 {
-    m_basetile_data = _genworld.m_basetile_data;
+    m_basetile_data = _generated_world.m_basetile_data;
 }

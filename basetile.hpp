@@ -1,7 +1,7 @@
 #ifndef BASETILE_HPP_INCLUDED
 #define BASETILE_HPP_INCLUDED
 
-//An identifier tag for a basetile.  This may not be a good system
+//An identifier tag for a Basetile.  This may not be a good system
 enum TileType {
     TILEFLAT,
     TILE0111,
@@ -25,9 +25,9 @@ enum TileType {
     TILENULL
     };
 
-class basetile {
+class Basetile {
 
-    //The basetile's identifier tag
+    //The Basetile's identifier tag
     TileType type_of_tile;
 
     //The heights of the vertices of the tile
@@ -41,9 +41,9 @@ class basetile {
 public:
 
     //constructors
-    basetile(int _left, int _top, int _right, int _bot);
-    basetile(int _height);
-    basetile();
+    Basetile(int _left, int _top, int _right, int _bot);
+    Basetile(int _height);
+    Basetile();
 
     //Function to alter vertices
     void setVertices(int _left, int _top, int _right, int _bot);

@@ -1,18 +1,18 @@
 #include <SFML/Graphics.hpp>
 
 #include "stdlib.h"
-#include "application.hpp"
-#include "worldgen.hpp"
-#include "world.hpp"
-#include "cameraview.hpp"
+#include "Application.hpp"
+#include "WorldGenerator.hpp"
+#include "World.hpp"
+#include "CameraView.hpp"
 
-application::application() : m_game_world(m_generator.generateWorld(512, 512)),
+Application::Application() : m_game_world(m_generator.generateWorld(512, 512)),
                              m_window(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close)
 {
     m_window.setFramerateLimit(120);
 }
 
-void application::run() {
+void Application::run() {
 
     //These are intended for seamless scrolling
     //TODO: Delegate to input class/function?
