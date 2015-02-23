@@ -5,6 +5,8 @@
 #include "GraphicsModule.hpp"
 #include "World.hpp"
 
+#include <iostream>
+
 GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) : m_main_camera(_xWindowDimension, _yWindowDimension, 0, -_yWindowDimension/2){
 
     //Initialize simple values
@@ -114,17 +116,21 @@ void GraphicsModule::renderWorld(sf::RenderWindow &mwindow, const World &gamewor
     int yTileTopLeft = static_cast<int>((m_main_camera.getX()/64 + m_main_camera.getY()/32)/m_scale_level);
 
     // Precalculate the start and stop points
+    // BEST FIX:
     // TODO CHANGE THIS TO MAKE IT SO THAT ONLY SEEN TILES ARE DRAWN INSTEAD OF OVERLAYED SQUARE?
-    int xTileStart = std::max(xTileTopLeft - m_y_tiles_fit_screen, 0);
+    //      THIS WILL BE A DRASTIC CHANGE AND WILL REQUIRE USING THE FOR LOOPS.  IS IT WORTH IT? -> MAY IMPROVE PERFORMANCE
+    // SECONDARY FIX:
+    // TODO Fix height offset values ->WILL HURT PERFORMANCE ACTUALLY
+    int xTileStart = std::max(static_cast<int>(xTileTopLeft - m_y_tiles_fit_screen - 4), 0);
     int xTileEnd   = std::min(xsize, xTileTopLeft + m_x_tiles_fit_screen);
 
     int yTileStart = std::max(yTileTopLeft, 0);
-    int yTileEnd   = std::min(ysize, yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen);
+    int yTileEnd   = std::min(ysize, static_cast<int>(yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen + 6));
 
-    // see (COMMENT: C000001) for information about this loop
+    // see (COMMENT ID: C000001) for information about this loop
     for (int i = xTileStart; i < xTileEnd; i++)
     {
-    // see (COMMENT ID: 000002) for information about this loop
+    // see (COMMENT ID: C000002) for information about this loop
         for (int j = yTileStart; j < yTileEnd; j++)
         {
             // The x and y solutions to the transformation matrix [x] [ 32      32 ]
@@ -253,7 +259,7 @@ void GraphicsModule::changeZoomLevel(int delta)
 {
     if (m_zoom_level < 6 && delta > 0)
         m_zoom_level++;
-    else if (m_zoom_level > 1 && delta < 0)
+    else if (m_zoom_level > 0 && delta < 0)
         m_zoom_level--;
 
     //Scale things based off powers of 2

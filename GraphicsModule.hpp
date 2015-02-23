@@ -17,6 +17,9 @@ class GraphicsModule {
 
     //The height displacement between two vertices when one is higher (normal zoom)
     static const int HEIGHT_INCREMENTS = 8;
+
+    //The maximum height possible for a basetile vertex
+    static const int MAX_VERTEX_HEIGHT = 32;
     /*
      * Primitive variables
      */

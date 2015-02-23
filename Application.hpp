@@ -19,7 +19,8 @@ class Application {
     World m_game_world;
 
     //The main display window
-    sf::RenderWindow m_window;                   //Put this above world generator to have the screen the first thing generated;  Might be useful later for load screens
+    //Put this above world generator to have the screen the first thing generated;  Might be useful later for load screens
+    sf::RenderWindow m_window;
 
     //The graphics renderer
     GraphicsModule m_graphics_module;
