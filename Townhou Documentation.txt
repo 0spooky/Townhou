@@ -1,45 +1,96 @@
-ID: 000001
+FACT ID: F000001
+	Vector position -> displayed tile map is defined by the definition matrix
+		[x]  [ 32      32 ]
+		[y]  [ 16     -16 ]
+	Multiplied by the scale factor
 
-    //  for loop:
-    //	Purpose : Iterate through each level of the vector of vectors of basetiles, accounting for whether they will be onscreen (x-component)
-    //
-    //  Start off unsigned int i at whichever is higher: 0                                                      (the lowest allowed vector position)
-    //                                                   (viewpoint.x/64 - viewpoint.y/32) - 32                 (the y solution to the inverse matrix
-    //                                                                                                                                            [x] [ 1/64  1/32 ]
-    //                                                                                                                                            [y] [ 1/64 -1/32 ]
-    //                                                                                                                       of the definition matrix
-    //                                                                                                                                            [x] [ 32      32 ]
-    //                                                                                                                                            [y] [ 16     -16 ]
-    //                                                                                                          with 2 subtracted.  Gives 2 levels off screen in the
-    //                                                                                                          top left direction.
-    //                                                                                                          (From top left corner; likely around 32 around middle)
-    //  Increments until unsigned int i is greater than whichever is lower:
-    //                                                   the vector size (xsize)
-    //                                                   ((viewpoint.x/64 + viewpoint.y/32) + 1920/64) + 32     (the x solution to the inverse definition matrix (see above)
-    //                                                                                                          with the screen width (1920) divided by the tile width (64) added
-    //                                                                                                          with 32 added.  Gives 2 levels off screen in the bottom right direction.
-    //                                                                                                          (From bottom right corner; likely around 32 around middle))
-    //
+FACT ID: F000002
+	If a square is overlayed on the window like shown in R000001, the number of tiles that fit vertically is also the number of tiles that
+	fit in the legs of the triangle offscreen.
 
-ID: 000002
+FACT ID: F000003 ref F000002
+	The addition of the number of tiles that fit X and the number of tiles that fit Y is the side length of the overlayed square
 
-    //  for loop:
-    //	Purpose : Iterate through each level of an individual vector of basetiles, accounting for whether they will be onscreen (y-component)
-    //
-    //  Start off unsigned int i at whichever is higher: 0                                                      (the lowest allowed vector position)
-    //                                                   (viewpoint.x/64 - viewpoint.y/32) - 32                 (the y solution to the inverse matrix
-    //                                                                                                                                            [x] [ 1/64  1/32 ]
-    //                                                                                                                                            [y] [ 1/64 -1/32 ]
-    //                                                                                                                       of the definition matrix
-    //                                                                                                                                            [x] [ 32      32 ]
-    //                                                                                                                                            [y] [ 16     -16 ]
-    //                                                                                                          with 32 subtracted.  Gives some levels off screen in the
-    //                                                                                                          bottom left direction.
-    //                                                                                                          (From bottom left corner; likely over 32 around middle))
-    //  Increments until unsigned int i is greater than whichever is lower:
-    //                                                   the vector size (xsize)
-    //                                                   (viewpoint.x/64 - viewpoint.y/32) + 960/32 + 2         (the y solution to the inverse definition matrix (see above)
-    //                                                                                                          with the screen height (960) divided by the tile height (32) added
-    //                                                                                                          with 2 added.  Gives 2 levels off screen in the top right direction.
-    //                                                                                                          (From top right corner; likely around 32 around middle))
-    //
+COMMENT ID: C000001
+
+    	for loop
+	Purpose: Iterate through the x coordinate of tiles that will be shown onscreen
+		Goes from the bottom left edge of the overlayed square to the top right edge of the overlayed square
+			(Technical -> Iterate through a vector of vectors of Basetile's)
+
+	Start: Whichever is higher: 	0;
+				((m_main_camera.getX()/64 - m_main_camera.getY()/32)/m_scale_level
+				- m_y_tiles_fit_screen - OFFSET FROM TILE HEIGHT) (TODO)
+
+				First being 
+					the lowest allowed vector position
+
+				Second being 
+					the x solution to the inverse definition matrix
+					see F000001
+						[x]  [ 1/64  1/32 ]
+						[y]  [ 1/64 -1/32 ]
+					minus the number of tiles that fit screen in y (see F000002)
+					minus offset from tile (TODO)
+	End: Whichever is lower:	xsize
+				((m_main_camera.getX()/64 - m_main_camera.getY()/32)/m_scale_level
+				+ m_x_tiles_fit_screen)
+
+				First being
+					the highest allowed vector position
+
+				Second being
+					the x solution to the inverse definition matrix
+					see ABOVE
+					+ the number of tiles that fit screen in x (see F000002)
+
+COMMENT ID: C000002
+
+  	for loop
+	Purpose: Iterate through the y coordinate of tiles that will be shown onscreen
+		Goes from the top left edge of the overlayed square to the bottom right edge of the overlayed square
+			(Technical -> vector of Basetile's)
+
+	Start: Whichever is higher: 	0;
+				((m_main_camera.getX()/64 + m_main_camera.getY()/32)/m_scale_level)
+
+				First being 
+					the lowest allowed vector position
+
+				Second being 
+					the y solution to the inverse definition matrix
+					see F000001
+						[x]  [ 1/64  1/32 ]
+						[y]  [ 1/64 -1/32 ]
+					SINCE: Corner of camera is already on the top left edge
+	End: Whichever is lower:	ysize
+				((m_main_camera.getX()/64 - m_main_camera.getY()/32)/m_scale_level
+				+ m_x_tiles_fit_screen + m_y_tiles_fit_screen)
+
+				First being
+					the highest allowed vector position
+
+				Second being
+					the x solution to the inverse definition matrix
+					see ABOVE
+					+ the number of tiles that fit screen in x (see F000002)
+					+ the number of tiles that fit screen in y (see F000002)
+					SINCE: (see F000003)
+
+RESOURCE ID: R000001
+
+	The drawn tiles are the overlayed square as shown
+                                                               /\
+                                                       /                \
+                                               /                                \
+                                     _/________________________\_
+                                    /|                                                     |\
+                                 /   |                                                     |   \
+                              /      |                                                     |      \
+                              \      |                                                     |      /
+                                 \   |                                                     |   /
+                                    \|__________________________ |/
+                                       \                                                /
+                                               \                                /
+                                                       \                /
+                                                               \/

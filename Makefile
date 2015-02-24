@@ -3,8 +3,8 @@ CXX := g++
 
 all: Townhou
 
-Townhou: application.o basetile.o cameraview.o graphicsmodule.o main.o Noisegen.o world.o worldgen.o
-	$(CXX) application.o basetile.o cameraview.o graphicsmodule.o main.o Noisegen.o world.o worldgen.o -o Townhou $(LIBS)
+Townhou: Application.o Basetile.o CameraView.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o
+	$(CXX) Application.o Basetile.o CameraView.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o -o Townhou $(LIBS)
 
 %.o: %.cpp
 	$(CXX) -c $< -o $@

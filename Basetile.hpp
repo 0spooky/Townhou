@@ -1,8 +1,8 @@
 #ifndef BASETILE_HPP_INCLUDED
 #define BASETILE_HPP_INCLUDED
 
-//An identifier tag for a basetile.  This may not be a good system
-enum tiletype {
+//An identifier tag for a Basetile.  This may not be a good system
+enum TileType {
     TILEFLAT,
     TILE0111,
     TILE1011,
@@ -25,36 +25,37 @@ enum tiletype {
     TILENULL
     };
 
-class basetile {
+class Basetile {
 
-    //The basetile's identifier tag
-    tiletype typeoftile;
+    //The Basetile's identifier tag
+    TileType type_of_tile;
 
-public:
     //The heights of the vertices of the tile
     //left denotes north-west corner, top  denotes north-east corner
     //bot  denotes south-west corner, left denotes south-east corner
-    short   leftheight,
-            topheight,
-            rightheight,
-            botheight;
+    int m_left_height,
+        m_top_height,
+        m_right_height,
+        m_bot_height;
+
+public:
 
     //constructors
-    basetile(short left, short top, short right, short bot);
-    basetile(short height);
-    basetile();
+    Basetile(int _left, int _top, int _right, int _bot);
+    Basetile(int _height);
+    Basetile();
 
     //Function to alter vertices
-    void setvertices(short left, short top, short right, short bot);
+    void setVertices(int _left, int _top, int _right, int _bot);
 
     //Function to determine highest point
-    int gethighestpoint() const;
+    int getHighestPoint() const;
 
     //Function to determine "flat" height
-    int reference_height() const;
+    int referenceHeight() const;
 
     //Function to get identifier tag
-    tiletype gettiletype() const;
+    TileType getTileType() const {return type_of_tile;};
 
 };
 
