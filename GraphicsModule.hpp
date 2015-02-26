@@ -73,6 +73,10 @@ class GraphicsModule {
      * Private functions
      */
 
+    //Function to render the gameworld TODO: Push into update
+    void _renderWorld(sf::RenderWindow &mwindow, const World &gameworld);
+    //Function to alter zoom level TODO: Make private when update is finished
+    void _changeZoomLevel(int delta);
     //A helper function which scales all basetile graphics
     void _scaleTiles();
 
@@ -81,10 +85,9 @@ public:
     GraphicsModule(int _xWindowDimension, int _yWindowDimension);
     //Return the cameraview to manipulate from outside class
     CameraView& getMainCamera();
-    //Function to render the gameworld
-    void renderWorld(sf::RenderWindow &mwindow, const World &gameworld);
-    //Function to alter zoom level
-    void changeZoomLevel(int delta);
+    //Updates all statuses of the graphics TODO: Make private when update is finished
+    void update(sf::RenderWindow &mwindow, const World &gameworld);
+
 
 };
 
