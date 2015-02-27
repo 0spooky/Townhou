@@ -15,16 +15,21 @@ Application::Application() : m_game_world(m_generator.generateWorld(512, 512)),
     m_window.setFramerateLimit(120);
 }
 
-void Application::run() {
+void Application::_handleInput()
+{
+    sf::Event event;
+    while (m_window.pollEvent(event))
+    {
+        if (Input::parseInput(event, m_window) == false)
+            m_window.close();
+    }
+}
 
+void Application::run()
+{
     while (m_window.isOpen())
     {
-        sf::Event event;
-        while (m_window.pollEvent(event))
-        {
-            if (Input::parseInput(event, m_window) == false)
-                m_window.close();
-        }
+        _handleInput();
 
         m_window.clear();
         m_graphics_module.update(m_window, m_game_world);

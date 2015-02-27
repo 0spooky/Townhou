@@ -25,6 +25,9 @@ class Application {
     //The graphics renderer
     GraphicsModule m_graphics_module;
 
+    //Determine input states to update Input framework
+    void _handleInput();
+
 public:
 
     //Constructor
