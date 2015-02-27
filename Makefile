@@ -1,16 +1,21 @@
 LIBS=-lsfml-graphics -lsfml-window -lsfml-system
 CXX := g++
+CXXFLAGS += -std=c++11
 
 all: Townhou
 
-Townhou: Application.o Basetile.o CameraView.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o
-	$(CXX) Application.o Basetile.o CameraView.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o -o Townhou $(LIBS)
+release: CXXFLAGS += -O3
+release: CCFLAGS += -O3
+release: Townhou
+
+Townhou: Application.o Basetile.o CameraView.o GraphicsModule.o Input.o main.o NoiseGenerator.o World.o WorldGenerator.o
+	$(CXX) $(CXXFLAGS) Application.o Basetile.o CameraView.o GraphicsModule.o Input.o main.o NoiseGenerator.o World.o WorldGenerator.o -o Townhou $(LIBS)
 
 %.o: %.cpp
-	$(CXX) -c $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 %.o: %.hpp
-	$(CXX) -c $< -o $@
+	$(CXX) -c $(CXXFLAGS) $< -o $@
 
 clean:
 	rm *o Townhou
