@@ -24,73 +24,15 @@ GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) : m
     //Initialize texture
     m_maptile_tex.loadFromFile("data/tiles_grass_0.png");
 
-    //Initialize basetile sprites
-    flat_iso_tile.setTexture(m_maptile_tex);
-    flat_iso_tile.setTextureRect(sf::IntRect(0, 0, 64, 48));
-
-    //Single high tiles
-
-    _2_1_1_1_iso_tile.setTexture(m_maptile_tex);
-    _2_1_1_1_iso_tile.setTextureRect(sf::IntRect(0*64, 1*48, 64, 48));
-
-    _1_1_1_2_iso_tile.setTexture(m_maptile_tex);
-    _1_1_1_2_iso_tile.setTextureRect(sf::IntRect(1*64, 1*48, 64, 48));
-
-    _1_1_2_1_iso_tile.setTexture(m_maptile_tex);
-    _1_1_2_1_iso_tile.setTextureRect(sf::IntRect(2*64, 1*48, 64, 48));
-
-    _1_2_1_1_iso_tile.setTexture(m_maptile_tex);
-    _1_2_1_1_iso_tile.setTextureRect(sf::IntRect(3*64, 1*48, 64, 48));
-
-    //Full slant tiles
-
-    _1_1_0_0_iso_tile.setTexture(m_maptile_tex);
-    _1_1_0_0_iso_tile.setTextureRect(sf::IntRect(0*64, 2*48, 64, 48));
-
-    _1_0_0_1_iso_tile.setTexture(m_maptile_tex);
-    _1_0_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 2*48, 64, 48));
-
-    _0_0_1_1_iso_tile.setTexture(m_maptile_tex);
-    _0_0_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 2*48, 64, 48));
-
-    _0_1_1_0_iso_tile.setTexture(m_maptile_tex);
-    _0_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 2*48, 64, 48));
-
-    //Single low tiles
-
-    _1_1_0_1_iso_tile.setTexture(m_maptile_tex);
-    _1_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 3*48, 64, 48));
-
-    _1_0_1_1_iso_tile.setTexture(m_maptile_tex);
-    _1_0_1_1_iso_tile.setTextureRect(sf::IntRect(1*64, 3*48, 64, 48));
-
-    _0_1_1_1_iso_tile.setTexture(m_maptile_tex);
-    _0_1_1_1_iso_tile.setTextureRect(sf::IntRect(2*64, 3*48, 64, 48));
-
-    _1_1_1_0_iso_tile.setTexture(m_maptile_tex);
-    _1_1_1_0_iso_tile.setTextureRect(sf::IntRect(3*64, 3*48, 64, 48));
-
-    //Full tilt tiles
-
-    _1_0_1_2_iso_tile.setTexture(m_maptile_tex);
-    _1_0_1_2_iso_tile.setTextureRect(sf::IntRect(0*64, 4*48, 64, 48));
-
-    _2_1_0_1_iso_tile.setTexture(m_maptile_tex);
-    _2_1_0_1_iso_tile.setTextureRect(sf::IntRect(1*64, 4*48, 64, 48));
-
-    _1_2_1_0_iso_tile.setTexture(m_maptile_tex);
-    _1_2_1_0_iso_tile.setTextureRect(sf::IntRect(2*64, 4*48, 64, 48));
-
-    _0_1_2_1_iso_tile.setTexture(m_maptile_tex);
-    _0_1_2_1_iso_tile.setTextureRect(sf::IntRect(3*64, 4*48, 64, 48));
-
-    //Split tiles
-
-    _0_1_0_1_iso_tile.setTexture(m_maptile_tex);
-    _0_1_0_1_iso_tile.setTextureRect(sf::IntRect(0*64, 5*48, 64, 48));
-
-    _1_0_1_0_iso_tile.setTexture(m_maptile_tex);
-    _1_0_1_0_iso_tile.setTextureRect(sf::IntRect(1*64, 5*48, 64, 48));
+    //Initialize standard base tiles
+    for(int i = 0; i < 20; i++)
+    {
+        m_base_iso_tiles[i].setTexture(m_maptile_tex);
+        if(i == 0)
+            m_base_iso_tiles[i].setTextureRect(sf::IntRect(0, 0, 64, 48));
+        else
+            m_base_iso_tiles[i].setTextureRect(sf::IntRect(((i-1)%4)*64, ((i-1)/4 + 1)*48, 64, 48));
+    }
 
 }
 
@@ -107,8 +49,8 @@ void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gamewo
     // The "x" size of the game map
     // The "y" size of the game map;
     // Will probably take this out eventually for optimization or something
-    int   xsize = gameworld.getXsize(),
-          ysize = gameworld.getYsize();
+    int   x_size = gameworld.getXsize() - 1,
+          y_size = gameworld.getYsize() - 1;
 
     // The x and y solutions to the inverse transformation matrix [x] [ 1/64 -1/32]
     //                                                            [y] [ 1/64  1/32]
@@ -123,10 +65,10 @@ void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gamewo
     // SECONDARY FIX:
     // TODO Fix height offset values ->WILL HURT PERFORMANCE ACTUALLY
     int xTileStart = std::max(static_cast<int>(xTileTopLeft - m_y_tiles_fit_screen - 4), 0);
-    int xTileEnd   = std::min(xsize, xTileTopLeft + m_x_tiles_fit_screen);
+    int xTileEnd   = std::min(x_size, xTileTopLeft + m_x_tiles_fit_screen);
 
     int yTileStart = std::max(yTileTopLeft, 0);
-    int yTileEnd   = std::min(ysize, static_cast<int>(yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen + 6));
+    int yTileEnd   = std::min(y_size, static_cast<int>(yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen + 6));
 
     // see (COMMENT ID: C000001) for information about this loop
     for (int i = xTileStart; i < xTileEnd; i++)
@@ -144,116 +86,17 @@ void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gamewo
             x1 =                 (m_scale_level * 32) * ( i + j);
             y1 = static_cast<int>(m_scale_level * 16) * (-i + j);
 
-            sf::Vector2f tileposition(x1 - m_main_camera.getX(), y1 - m_main_camera.getY() - HEIGHT_INCREMENTS * m_scale_level * gameworld.tile(i,j).referenceHeight());
+            sf::Vector2f tile_position(x1 - m_main_camera.getX(), y1 - m_main_camera.getY() - HEIGHT_INCREMENTS * m_scale_level * gameworld.tile(i,j).referenceHeight());
 
-            switch(gameworld.tile(i,j).getTileType()) {
-
-                case (TILEFLAT):
-                    flat_iso_tile.setPosition(tileposition);
-                    mwindow.draw(flat_iso_tile);
-                    break;
-
-                //Single high tiles
-                case (TILE2111):
-                    _2_1_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_2_1_1_1_iso_tile);
-                    break;
-
-                case (TILE1112):
-                    _1_1_1_2_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_1_2_iso_tile);
-                    break;
-
-                case (TILE1121):
-                    _1_1_2_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_2_1_iso_tile);
-                    break;
-
-                case (TILE1211):
-                    _1_2_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_2_1_1_iso_tile);
-                    break;
-
-                //Full slant tiles
-                case (TILE0110):
-                    _0_1_1_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_1_1_0_iso_tile);
-                    break;
-
-                case (TILE0011):
-                    _0_0_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_0_1_1_iso_tile);
-                    break;
-
-                case (TILE1001):
-                    _1_0_0_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_0_0_1_iso_tile);
-                    break;
-
-                case (TILE1100):
-                    _1_1_0_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_0_0_iso_tile);
-                    break;
-
-                //Single low tiles
-                case (TILE0111):
-                    _0_1_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_1_1_1_iso_tile);
-                    break;
-
-                case (TILE1011):
-                    _1_0_1_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_0_1_1_iso_tile);
-                    break;
-
-                case (TILE1101):
-                    _1_1_0_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_0_1_iso_tile);
-                    break;
-
-                case (TILE1110):
-                    _1_1_1_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_1_1_0_iso_tile);
-                    break;
-
-                //Full tilt tiles
-
-                case (TILE1012):
-                    _1_0_1_2_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_0_1_2_iso_tile);
-                    break;
-
-                case (TILE2101):
-                    _2_1_0_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_2_1_0_1_iso_tile);
-                    break;
-
-                case (TILE1210):
-                    _1_2_1_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_2_1_0_iso_tile);
-                    break;
-
-                case (TILE0121):
-                    _0_1_2_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_1_2_1_iso_tile);
-                    break;
-
-                //Split tiles
-                case (TILE1010):
-                    _1_0_1_0_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_1_0_1_0_iso_tile);
-                    break;
-
-                case (TILE0101):
-                    _0_1_0_1_iso_tile.setPosition(tileposition);
-                    mwindow.draw(_0_1_0_1_iso_tile);
-                    break;
-
-                //default:
-                //   break;
-            }
+            _drawIsoTile(gameworld.tile(i,j).getTileType(), mwindow, tile_position);
         }
     }
+}
+
+void GraphicsModule::_drawIsoTile(const TileType _tile_ID, sf::RenderWindow &_target_window, const sf::Vector2f &_tile_position)
+{
+    m_base_iso_tiles[_tile_ID].setPosition(_tile_position);
+    _target_window.draw(m_base_iso_tiles[_tile_ID]);
 }
 
 void GraphicsModule::_changeZoomLevel(int delta)
@@ -279,30 +122,8 @@ void GraphicsModule::_changeZoomLevel(int delta)
 
 void GraphicsModule::_scaleTiles()
 {
-    flat_iso_tile.setScale(m_scale_level, m_scale_level);
-    //Single high tiles
-    _2_1_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_1_1_2_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_1_2_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_2_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    //Full slant tiles
-    _0_1_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
-    _0_0_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_0_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_1_0_0_iso_tile.setScale(m_scale_level, m_scale_level);
-    //Single low tiles
-    _0_1_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_0_1_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_1_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
-    //Full tilt tiles
-    _1_0_1_2_iso_tile.setScale(m_scale_level, m_scale_level);
-    _2_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    _1_2_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
-    _0_1_2_1_iso_tile.setScale(m_scale_level, m_scale_level);
-    //Split tiles
-    _1_0_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
-    _0_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
+    for (int i = 0; i < 20; i++)
+        m_base_iso_tiles[i].setScale(m_scale_level, m_scale_level);
 }
 
 void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)

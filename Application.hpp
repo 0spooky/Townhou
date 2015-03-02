@@ -14,6 +14,13 @@ class Application {
     static const int X_WINDOW_DIMENSION = 1920;
     static const int Y_WINDOW_DIMENSION = 960;
 
+    //The world dimensions.  TODO: Make this configurable
+    static const int X_WORLD_DIMENSION = 512;
+    static const int Y_WORLD_DIMENSION = 512;
+
+    //The maximum allowed FPS.  TODO: Make this configurable?
+    static const int MAX_FPS = 120;
+
     //The game world and its generator
     WorldGenerator m_generator;
     World m_game_world;
@@ -32,10 +39,9 @@ public:
 
     //Constructor
     Application();
-
     //Start everything
     void run();
-    //End everything. TODO: Possible clean-up needed
+    //End everything. TODO: In case clean-up is needed eventually
     void close() {};
 
 };
