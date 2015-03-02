@@ -8,8 +8,8 @@ release: CXXFLAGS += -O3
 release: CCFLAGS += -O3
 release: Townhou
 
-Townhou: Application.o Basetile.o CameraView.o GraphicsModule.o Input.o main.o NoiseGenerator.o World.o WorldGenerator.o
-	$(CXX) $(CXXFLAGS) Application.o Basetile.o CameraView.o GraphicsModule.o Input.o main.o NoiseGenerator.o World.o WorldGenerator.o -o Townhou $(LIBS)
+Townhou: Application.o Basetile.o CameraView.o Input.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o
+	$(CXX) $(CXXFLAGS) Application.o Basetile.o CameraView.o Input.o GraphicsModule.o main.o NoiseGenerator.o World.o WorldGenerator.o -o Townhou $(LIBS)
 
 %.o: %.cpp
 	$(CXX) -c $(CXXFLAGS) $< -o $@
