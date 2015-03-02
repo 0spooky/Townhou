@@ -3,6 +3,7 @@
 #include "Basetile.hpp"
 #include "CameraView.hpp"
 #include "GraphicsModule.hpp"
+#include "Input.hpp"
 #include "World.hpp"
 
 #include <iostream>
@@ -98,7 +99,7 @@ CameraView& GraphicsModule::getMainCamera()
     return m_main_camera;
 }
 
-void GraphicsModule::renderWorld(sf::RenderWindow &mwindow, const World &gameworld) {
+void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gameworld) {
 
     // Used for calculating transformation matrices of x any y values
     int x1, y1;
@@ -255,7 +256,7 @@ void GraphicsModule::renderWorld(sf::RenderWindow &mwindow, const World &gamewor
     }
 }
 
-void GraphicsModule::changeZoomLevel(int delta)
+void GraphicsModule::_changeZoomLevel(int delta)
 {
     if (m_zoom_level < 6 && delta > 0)
         m_zoom_level++;
@@ -302,4 +303,17 @@ void GraphicsModule::_scaleTiles()
     //Split tiles
     _1_0_1_0_iso_tile.setScale(m_scale_level, m_scale_level);
     _0_1_0_1_iso_tile.setScale(m_scale_level, m_scale_level);
+}
+
+void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
+{
+    if (Input::getMouseWheelDelta() != 0) {
+        _changeZoomLevel(Input::getMouseWheelDelta());
+        Input::zeroMouseWheelDelta();
+    }
+
+    if (Input::arrowKeyPressed())
+        m_main_camera.changeView(Input::getKeyPressed("Up"), Input::getKeyPressed("Down"), Input::getKeyPressed("Left"), Input::getKeyPressed("Right"));
+
+    _renderWorld(mwindow, gameworld);
 }
