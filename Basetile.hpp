@@ -3,32 +3,32 @@
 
 //An identifier tag for a Basetile.  This may not be a good system
 enum TileType {
-    TILEFLAT,
-    TILE0111,
-    TILE1011,
-    TILE1101,
-    TILE1110,
-    TILE0110,
-    TILE0011,
-    TILE1001,
-    TILE1100,
-    TILE2111,
-    TILE1211,
-    TILE1121,
-    TILE1112,
-    TILE0121,
-    TILE1012,
-    TILE2101,
-    TILE1210,
-    TILE0101,
-    TILE1010,
-    TILENULL
+    TILEFLAT=0,
+    TILE2111=1,
+    TILE1112=2,
+    TILE1121=3,
+    TILE1211=4,
+    TILE1100=5,
+    TILE1001=6,
+    TILE0011=7,
+    TILE0110=8,
+    TILE1101=9,
+    TILE1011=10,
+    TILE0111=11,
+    TILE1110=12,
+    TILE1012=13,
+    TILE2101=14,
+    TILE1210=15,
+    TILE0121=16,
+    TILE0101=17,
+    TILE1010=18,
+    TILENULL=19
     };
 
 class Basetile {
 
     //The Basetile's identifier tag
-    TileType type_of_tile;
+    TileType m_type_of_tile;
 
     //The heights of the vertices of the tile
     //left denotes north-west corner, top  denotes north-east corner
@@ -55,7 +55,7 @@ public:
     int referenceHeight() const;
 
     //Function to get identifier tag
-    TileType getTileType() const {return type_of_tile;};
+    TileType getTileType() const {return m_type_of_tile;};
 
 };
 

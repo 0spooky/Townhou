@@ -8,11 +8,11 @@
 #include "WorldGenerator.hpp"
 #include "World.hpp"
 
-Application::Application() : m_game_world(m_generator.generateWorld(512, 512)),
+Application::Application() : m_game_world(m_generator.generateWorld(X_WORLD_DIMENSION, Y_WORLD_DIMENSION)),
                              m_window(sf::VideoMode(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION), "Townhou", sf::Style::Close),
                              m_graphics_module(X_WINDOW_DIMENSION, Y_WINDOW_DIMENSION)
 {
-    m_window.setFramerateLimit(120);
+    m_window.setFramerateLimit(MAX_FPS);
 }
 
 void Application::_handleInput()

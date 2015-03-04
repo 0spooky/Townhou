@@ -20,8 +20,8 @@ public:
     World(const World& _generated_world);
 
     //Functions to return dimensions of the World. TODO: Make these new parameters.  Why calculate every time?
-    int getXsize() const {return m_basetile_data[0].size();}
-    int getYsize() const {return m_basetile_data.size();}
+    int getXsize() const {return m_basetile_data.size();}
+    int getYsize() const {return m_basetile_data[0].size();}
 
     //Return the tile at position (x, y)
     Basetile tile(int x, int y) const {return m_basetile_data[x][y];}

@@ -1,5 +1,7 @@
 #ifndef GRAPHICSMODULE_HPP_INCLUDED
 #define GRAPHICSMODULE_HPP_INCLUDED
+#include <unordered_map>
+
 #include <SFML/Graphics.hpp>
 
 #include "Basetile.hpp"
@@ -41,43 +43,29 @@ class GraphicsModule {
 
     /*
      * Class variables
-     *
-     * Basetile Sprites
-     * SYNTAX: _LEFT_TOP_RIGHT_BOTTOM_iso_tile
      */
 
     //A Texture holding basic map tiles
     sf::Texture m_maptile_tex;
 
-    //The Sprite of the flat isometric tile
-    sf::Sprite flat_iso_tile;
+    //The container for the standard isometric tiles used
+    //the int key will be gotten from the basetile.hpp TileType
+    std::unordered_map<int, sf::Sprite> m_base_iso_tiles;
 
-    //The Sprites of the single-high isometric tiles
-    sf::Sprite  _2_1_1_1_iso_tile, _1_1_1_2_iso_tile, _1_1_2_1_iso_tile, _1_2_1_1_iso_tile;
-
-    //The Sprites of the normal-slope isometric tiles
-    sf::Sprite  _1_1_0_0_iso_tile, _1_0_0_1_iso_tile, _0_0_1_1_iso_tile, _0_1_1_0_iso_tile;
-
-    //The Sprites of the single-low isometric tiles
-    sf::Sprite  _1_1_0_1_iso_tile, _1_0_1_1_iso_tile, _0_1_1_1_iso_tile, _1_1_1_0_iso_tile;
-
-    //The Sprites of the steep-slant isometric tiles
-    sf::Sprite  _1_0_1_2_iso_tile, _2_1_0_1_iso_tile, _1_2_1_0_iso_tile, _0_1_2_1_iso_tile;
-
-    //The Sprites of the split-valley isometric tiles
-    sf::Sprite  _0_1_0_1_iso_tile, _1_0_1_0_iso_tile;
-
+    //The main camera view for the screen; used for calculations
     CameraView m_main_camera;
 
     /*
      * Private functions
      */
 
-    //Function to render the gameworld TODO: Push into update
+    //Function to render the gameworld (used by update)
     void _renderWorld(sf::RenderWindow &mwindow, const World &gameworld);
-    //Function to alter zoom level TODO: Make private when update is finished
+    //Function to draw specific tiles (used by _renderWorld)
+    void _drawIsoTile(TileType _tile_ID, sf::RenderWindow &_target_window, const sf::Vector2f &_tile_position);
+    //Function to alter zoom level (used by update)
     void _changeZoomLevel(int delta);
-    //A helper function which scales all basetile graphics
+    //A helper function which scales all basetile graphics (used by _changeZoomLevel)
     void _scaleTiles();
 
 public:
