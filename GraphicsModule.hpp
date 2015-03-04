@@ -6,6 +6,7 @@
 
 #include "Basetile.hpp"
 #include "CameraView.hpp"
+#include "Tilemap.hpp"
 #include "World.hpp"
 
 class GraphicsModule {
@@ -54,6 +55,9 @@ class GraphicsModule {
 
     //The main camera view for the screen; used for calculations
     CameraView m_main_camera;
+
+    //The VectorArray of tiles to be drawn (The whole world)
+    Tilemap m_tilemap;
 
     /*
      * Private functions
