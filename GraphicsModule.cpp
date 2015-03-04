@@ -4,12 +4,14 @@
 #include "CameraView.hpp"
 #include "GraphicsModule.hpp"
 #include "Input.hpp"
+#include "Tilemap.hpp"
 #include "World.hpp"
 
 #include <iostream>
 
-GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) : m_main_camera(_xWindowDimension, _yWindowDimension, 0, -_yWindowDimension/2){
-
+GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) :  m_main_camera(_xWindowDimension, _yWindowDimension, 0, -_yWindowDimension/2),
+                                                                                m_tilemap(_xWindowDimension, _yWindowDimension)
+{
     //Initialize simple values
     m_zoom_level = 3;
 
