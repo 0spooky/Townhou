@@ -1,4 +1,5 @@
 #include <cmath>
+#include <sstream>
 
 #include "Basetile.hpp"
 #include "CameraView.hpp"
@@ -24,7 +25,7 @@ GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) :  
     m_y_tiles_fit_screen = yWindowDimension/static_cast<int>(32 * m_scale_level);
 
     //Initialize texture
-    m_maptile_tex.loadFromFile("data/tiles_grass_0.png");
+    m_maptile_tex.loadFromFile("data/tiles_grass_3.png");
 
     //Initialize standard base tiles
     for(int i = 0; i < 20; i++)
@@ -104,7 +105,7 @@ void GraphicsModule::_drawIsoTile(const TileType _tile_ID, sf::RenderWindow &_ta
 
 void GraphicsModule::_changeZoomLevel(int delta)
 {
-    if (m_zoom_level < 6 && delta > 0)
+    if (m_zoom_level < 5 && delta > 0)
         m_zoom_level++;
     else if (m_zoom_level > 0 && delta < 0)
         m_zoom_level--;
@@ -133,6 +134,7 @@ void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
 {
     if (Input::getMouseWheelDelta() != 0) {
        _changeZoomLevel(Input::getMouseWheelDelta());
+       m_tilemap.zoom(3);
        Input::zeroMouseWheelDelta();
     }
 
@@ -141,6 +143,9 @@ void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
     if (Input::arrowKeyPressed())
         m_main_camera.changeView(Input::getKeyPressed("Up"), Input::getKeyPressed("Down"), Input::getKeyPressed("Left"), Input::getKeyPressed("Right"));
 
-    m_tilemap.load("data/tiles_grass_0.png", gameworld, m_main_camera);
+    std::stringstream ss;
+    ss << "data/tiles_grass_" << m_zoom_level << ".png";
+
+    m_tilemap.load(ss.str(), gameworld, m_main_camera);
     mwindow.draw(m_tilemap);
 }

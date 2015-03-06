@@ -10,11 +10,10 @@ class CameraView {
 
     //The screen resolution TODO
     sf::Vector2i m_window_dimensions;
-    int xWindowDimension;
-    int yWindowDimension;
 
     //The current level of zoom of the camera
     int m_zoom_level;
+    float m_scale_level;
 
     //The camera's top left corner with respect to the standard map
     sf::Vector2i m_viewpoint;
@@ -22,16 +21,19 @@ class CameraView {
 public:
 
     //Constructors
-    CameraView(int _xWindowDimension, int _yWindowDimension);
-    CameraView(int _xWindowDimension, int _yWindowDimension, int x, int y);
+    CameraView(int _xWindowDimension, int _yWindowDimension, int x = 0, int y = 0);
 
     //Functions to return the camera's position
     int getX() const {return m_viewpoint.x;}
     int getY() const {return m_viewpoint.y;}
     sf::Vector2i getPosition() const {return m_viewpoint;}
 
-    //Functions to return the camera's dimensions
-    //int getXDim() const {return xWindowDimension}
+    //Function to return the camera's zoom
+    int getZoom() const {return m_zoom_level;}
+    float getScale() const {return m_scale_level;}
+
+    //Functions to return the camera's resolution
+    sf::Vector2i getResolution() const {return m_window_dimensions;}
 
     //A function to change the camera's position TODO:
     void changeView(bool up, bool down, bool left, bool right);
