@@ -3,7 +3,8 @@
 
 #include "CameraView.hpp"
 
-CameraView::CameraView(int _xWindowDimension, int _yWindowDimension) : m_viewpoint(0,0)
+CameraView::CameraView(int _xWindowDimension, int _yWindowDimension) :  m_viewpoint(0,0),
+                                                                        m_window_dimensions(_xWindowDimension, _yWindowDimension)
 {
     xWindowDimension = _xWindowDimension;
     yWindowDimension = _yWindowDimension;
@@ -11,7 +12,8 @@ CameraView::CameraView(int _xWindowDimension, int _yWindowDimension) : m_viewpoi
     m_zoom_level = 3;
 }
 
-CameraView::CameraView(int _xWindowDimension, int _yWindowDimension, int x, int y) : m_viewpoint(x, y)
+CameraView::CameraView(int _xWindowDimension, int _yWindowDimension, int x, int y) : m_viewpoint(x, y),
+                                                                                    m_window_dimensions(_xWindowDimension, _yWindowDimension)
 {
     xWindowDimension = _xWindowDimension;
     yWindowDimension = _yWindowDimension;
@@ -37,14 +39,14 @@ void CameraView::setZoomLevel(int _zoom_level)
         if (_zoom_level > m_zoom_level)
         {
             m_viewpoint   *= 2;
-            m_viewpoint.x += xWindowDimension / 2;
-            m_viewpoint.y += yWindowDimension / 2;
+            m_viewpoint.x += m_window_dimensions.x / 2;
+            m_viewpoint.y += m_window_dimensions.y / 2;
         }
         else if (_zoom_level < m_zoom_level)
         {
             m_viewpoint   /= 2;
-            m_viewpoint.x -= xWindowDimension / 4;
-            m_viewpoint.y -= yWindowDimension / 4;
+            m_viewpoint.x -= m_window_dimensions.x / 4;
+            m_viewpoint.y -= m_window_dimensions.y / 4;
         }
         m_zoom_level = _zoom_level;
 
@@ -58,4 +60,6 @@ void CameraView::setWindowDimensions(int _xWindowDimension, int _yWindowDimensio
 {
     xWindowDimension = _xWindowDimension;
     yWindowDimension = _yWindowDimension;
+
+    m_window_dimensions = {_xWindowDimension, _yWindowDimension};
 }

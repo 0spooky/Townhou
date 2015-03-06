@@ -9,6 +9,7 @@ class CameraView {
     static const int SCROLL_SPEED = 12;
 
     //The screen resolution TODO
+    sf::Vector2i m_window_dimensions;
     int xWindowDimension;
     int yWindowDimension;
 
@@ -27,6 +28,10 @@ public:
     //Functions to return the camera's position
     int getX() const {return m_viewpoint.x;}
     int getY() const {return m_viewpoint.y;}
+    sf::Vector2i getPosition() const {return m_viewpoint;}
+
+    //Functions to return the camera's dimensions
+    //int getXDim() const {return xWindowDimension}
 
     //A function to change the camera's position TODO:
     void changeView(bool up, bool down, bool left, bool right);

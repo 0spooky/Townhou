@@ -51,8 +51,8 @@ void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gamewo
     // The "x" size of the game map
     // The "y" size of the game map;
     // Will probably take this out eventually for optimization or something
-    int   x_size = gameworld.getXsize() - 1,
-          y_size = gameworld.getYsize() - 1;
+    int   x_size = gameworld.getXsize(),
+          y_size = gameworld.getYsize();
 
     // The x and y solutions to the inverse transformation matrix [x] [ 1/64 -1/32]
     //                                                            [y] [ 1/64  1/32]
@@ -73,6 +73,7 @@ void GraphicsModule::_renderWorld(sf::RenderWindow &mwindow, const World &gamewo
     int yTileEnd   = std::min(y_size, static_cast<int>(yTileTopLeft + m_y_tiles_fit_screen + m_x_tiles_fit_screen + 6));
 
     // see (COMMENT ID: C000001) for information about this loop
+    //for (int i = xTileStart; i < xTileEnd; i++)
     for (int i = xTileStart; i < xTileEnd; i++)
     {
     // see (COMMENT ID: C000002) for information about this loop
@@ -131,12 +132,15 @@ void GraphicsModule::_scaleTiles()
 void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
 {
     if (Input::getMouseWheelDelta() != 0) {
-        _changeZoomLevel(Input::getMouseWheelDelta());
-        Input::zeroMouseWheelDelta();
+       _changeZoomLevel(Input::getMouseWheelDelta());
+       Input::zeroMouseWheelDelta();
     }
+
+    //_renderWorld(mwindow, gameworld);
 
     if (Input::arrowKeyPressed())
         m_main_camera.changeView(Input::getKeyPressed("Up"), Input::getKeyPressed("Down"), Input::getKeyPressed("Left"), Input::getKeyPressed("Right"));
 
-    _renderWorld(mwindow, gameworld);
+    m_tilemap.load("data/tiles_grass_0.png", gameworld, m_main_camera);
+    mwindow.draw(m_tilemap);
 }
