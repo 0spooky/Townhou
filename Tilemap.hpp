@@ -17,7 +17,7 @@ class Tilemap : public sf::Drawable {
     void draw(sf::RenderTarget &_target, sf::RenderStates _states) const;
 
 public:
-    Tilemap(int _x_windo_dimension, int _y_window_dimension);
+    Tilemap(int _x_world_dimension, int _y_world_dimension);
     void load(const std::string &tileset, const World &gameworld, const CameraView &_camera);
 
 };
