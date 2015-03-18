@@ -8,11 +8,11 @@
 
 Tilemap::Tilemap(int _x_world_dimension, int _y_world_dimension)
 {
-    m_map_dimensions.x = 512;
-    m_map_dimensions.y = 512;
+    m_map_dimensions.x = 1024;
+    m_map_dimensions.y = 1024;
 
     m_maptile_verts.setPrimitiveType(sf::Quads);
-    m_maptile_verts.resize(m_map_dimensions.x * m_map_dimensions.y * 4);
+    m_maptile_verts.resize(1000*1000);
 }
 
 void Tilemap::load(const std::string &_tileset, const World &_game_world, const CameraView &_camera)
@@ -34,8 +34,6 @@ void Tilemap::load(const std::string &_tileset, const World &_game_world, const 
     sf::Vertex* quad;
     //
     sf::Vector2i tilesFitOnscreen(_camera.getResolution().x / static_cast<int>(64 * _camera.getScale()), _camera.getResolution().y / static_cast<int>(32 * _camera.getScale()));
-
-    std::cout << _camera.getResolution().y / static_cast<int>(32 * _camera.getScale()) << std::endl;
 
     // The "x" size of the game map
     // The "y" size of the game map;
@@ -75,7 +73,7 @@ void Tilemap::load(const std::string &_tileset, const World &_game_world, const 
                             ((tile_type - 1) / 4 + 1) * static_cast<int> (48 * _camera.getScale())};
 
             //set up a pointer to 4 vertices given the coordinates given
-            quad = &m_maptile_verts[((i - xTileStart) + (j - yTileStart) * x_size) * 4];
+            quad = &m_maptile_verts[((i - xTileStart) + (j - yTileStart) * (xTileEnd - xTileStart)) * 4];
 
             // The x and y solutions to the transformation matrix [x] [ 32      32 ]
             //                                                    [y] [-16      16 ]
@@ -112,12 +110,24 @@ void Tilemap::zoom(int _zoom_level)
     m_maptile_verts.clear();
 
     switch(_zoom_level) {
+    case 1:
+        m_maptile_verts.resize(244*246*4);
+        break;
+    case 2:
+        m_maptile_verts.resize(124*126*4);
+        break;
+    case 3:
+        m_maptile_verts.resize(64*66*4);
+        break;
     case 4:
-        m_maptile_verts.resize(m_map_dimensions.x * m_map_dimensions.y * 2);
+        m_maptile_verts.resize(34*36*4);
+        break;
     case 5:
-        m_maptile_verts.resize(m_map_dimensions.x * m_map_dimensions.y * 1);
+        m_maptile_verts.resize(19*21*4);
+        break;
     default:
-        m_maptile_verts.resize(m_map_dimensions.x * m_map_dimensions.y * 4);
+        m_maptile_verts.resize(64*66*4);
+        break;
 
     }
 }
