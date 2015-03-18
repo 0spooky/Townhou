@@ -15,8 +15,8 @@ class Application {
     static const int Y_WINDOW_DIMENSION = 960;
 
     //The world dimensions.  TODO: Make this configurable
-    static const int X_WORLD_DIMENSION = 512;
-    static const int Y_WORLD_DIMENSION = 512;
+    static const int X_WORLD_DIMENSION = 1024;
+    static const int Y_WORLD_DIMENSION = 1024;
 
     //The maximum allowed FPS.  TODO: Make this configurable?
     static const int MAX_FPS = 120;

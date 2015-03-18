@@ -107,7 +107,7 @@ void GraphicsModule::_changeZoomLevel(int delta)
 {
     if (m_zoom_level < 5 && delta > 0)
         m_zoom_level++;
-    else if (m_zoom_level > 0 && delta < 0)
+    else if (m_zoom_level > 1 && delta < 0)
         m_zoom_level--;
 
     //Scale things based off powers of 2
@@ -118,6 +118,8 @@ void GraphicsModule::_changeZoomLevel(int delta)
     m_y_tiles_fit_screen = yWindowDimension/static_cast<int>(32*m_scale_level);
 
     m_main_camera.setZoomLevel(m_zoom_level);
+
+    m_tilemap.zoom(m_zoom_level);
 
     //Alter sprites
     _scaleTiles();
@@ -134,7 +136,6 @@ void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
 {
     if (Input::getMouseWheelDelta() != 0) {
        _changeZoomLevel(Input::getMouseWheelDelta());
-       m_tilemap.zoom(3);
        Input::zeroMouseWheelDelta();
     }
 

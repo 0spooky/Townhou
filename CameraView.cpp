@@ -16,7 +16,7 @@ CameraView::CameraView(int _xWindowDimension, int _yWindowDimension, int x, int 
 void CameraView::changeView(bool up, bool down, bool left, bool right)
 {
     m_viewpoint.x = std::max(m_viewpoint.x + SCROLL_SPEED * right - SCROLL_SPEED * left, 0);    //
-    m_viewpoint.y = std::max(m_viewpoint.y + SCROLL_SPEED * down  - SCROLL_SPEED * up, static_cast<int>(m_scale_level*(512 * -16 - 16*8)));  //return std::min eventually
+    m_viewpoint.y = std::max(m_viewpoint.y + SCROLL_SPEED * down  - SCROLL_SPEED * up, static_cast<int>(m_scale_level*(1024 * -16 - 16*8)));  //return std::min eventually
 }
 
 void CameraView::setDeltaView(int x, int y)
@@ -42,9 +42,12 @@ void CameraView::setZoomLevel(int _zoom_level)
         m_zoom_level  = _zoom_level;
         m_scale_level = pow(2, m_zoom_level - 3);
 
-        // Keep in bounds
+        /* Keep in bounds
+         * TODO: return std::min eventually
+         * TODO: Tidy up math
+         */
         m_viewpoint.x = std::max(m_viewpoint.x, 0);
-        m_viewpoint.y = std::max(m_viewpoint.y , static_cast<int>(m_scale_level*(512 * -16 - 16*8)));  //return std::min eventually
+        m_viewpoint.y = std::max(m_viewpoint.y , static_cast<int>(m_scale_level*(1024 * -16 - 16*8)));
 
 }
 
