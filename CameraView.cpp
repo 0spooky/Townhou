@@ -3,8 +3,6 @@
 
 #include "CameraView.hpp"
 
-#include <iostream>
-
 CameraView::CameraView(int _xWindowDimension, int _yWindowDimension, int x, int y) : m_window_dimensions(_xWindowDimension, _yWindowDimension),
                                                                                      m_viewpoint(x, y)
 {

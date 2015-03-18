@@ -1,5 +1,4 @@
 #include <cmath>
-#include <sstream>
 
 #include "Basetile.hpp"
 #include "CameraView.hpp"
@@ -7,8 +6,6 @@
 #include "Input.hpp"
 #include "Tilemap.hpp"
 #include "World.hpp"
-
-#include <iostream>
 
 GraphicsModule::GraphicsModule(int _xWindowDimension, int _yWindowDimension) :  m_main_camera(_xWindowDimension, _yWindowDimension, 0, -_yWindowDimension/2),
                                                                                 m_tilemap(_xWindowDimension, _yWindowDimension)
@@ -144,9 +141,6 @@ void GraphicsModule::update(sf::RenderWindow &mwindow, const World &gameworld)
     if (Input::arrowKeyPressed())
         m_main_camera.changeView(Input::getKeyPressed("Up"), Input::getKeyPressed("Down"), Input::getKeyPressed("Left"), Input::getKeyPressed("Right"));
 
-    std::stringstream ss;
-    ss << "data/tiles_grass_" << m_zoom_level << ".png";
-
-    m_tilemap.load(ss.str(), gameworld, m_main_camera);
+    m_tilemap.load(gameworld, m_main_camera);
     mwindow.draw(m_tilemap);
 }
