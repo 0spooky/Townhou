@@ -18,8 +18,6 @@ class CameraView {
     //The camera's top left corner with respect to the standard map
     sf::Vector2i m_viewpoint;
 
-
-
 public:
 
     //Constructors

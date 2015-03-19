@@ -4,6 +4,8 @@
 #include "Tilemap.hpp"
 #include "World.hpp"
 
+#include <iostream>
+
 Tilemap::Tilemap(int _x_world_dimension, int _y_world_dimension)
 {
     m_map_dimensions.x = 1024;
@@ -12,7 +14,7 @@ Tilemap::Tilemap(int _x_world_dimension, int _y_world_dimension)
     m_maptile_verts.setPrimitiveType(sf::Quads);
     m_maptile_verts.resize(64*66*4);
 
-    m_maptile_tex.loadFromFile("data/tiles_grass_1.png");
+    m_maptile_tex.loadFromFile("data/tiles_grass_3.png");
 }
 
 void Tilemap::load(const World &_game_world, const CameraView &_camera)
@@ -56,6 +58,8 @@ void Tilemap::load(const World &_game_world, const CameraView &_camera)
     int yTileStart = std::max(yTileTopLeft, 0);
     int yTileEnd   = std::min(y_size, static_cast<int>(yTileTopLeft + tilesFitOnscreen.y + tilesFitOnscreen.x + 6));
 
+    std::cout << (xTileEnd - xTileStart) * (yTileEnd - yTileStart) * 4 << " : " << 64*66*4 << std::endl;
+
     //Populate VertexArray with tiles from the world
     for (int i = xTileStart; i < xTileEnd; i++){
 
@@ -77,7 +81,7 @@ void Tilemap::load(const World &_game_world, const CameraView &_camera)
             x1 =                 (_camera.getScale() * 32) * ( i + j);
             y1 = static_cast<int>(_camera.getScale() * 16) * (-i + j);
 
-            //The exact position of the referenced basetile, accounting for transformation, camera poeision, and tile height
+            //The exact position of the referenced basetile, accounting for transformation, camera position, and tile height
             vertex_pos = {x1 - _camera.getX(), static_cast<int>(y1 - _camera.getY() - 8 * _game_world.tile(i,j).referenceHeight() * _camera.getScale())};
 
             quad[0].position  = sf::Vector2f(vertex_pos);
@@ -92,8 +96,17 @@ void Tilemap::load(const World &_game_world, const CameraView &_camera)
 
         }
     }
+
+    _sanitizeVerts((xTileEnd - xTileStart) * (yTileEnd - yTileStart) * 4);
 }
 
+void Tilemap::_sanitizeVerts(int _last_used_index)
+{
+    for (int i = _last_used_index; i < m_maptile_verts.getVertexCount(); i++)
+    {
+        m_maptile_verts[i].position = sf::Vector2f(0,0);
+    }
+}
 
 void Tilemap::draw(sf::RenderTarget &_target, sf::RenderStates _states) const
 {

@@ -16,7 +16,9 @@ class GraphicsModule {
      */
 
     //The "normal" zoom level -> Used for calculations
-    static const int BASIC_ZOOM_LEVEL = 3;
+    static const int MAX_ZOOM_LEVEL   = 5;
+    static const int MIN_ZOOM_LEVEL   = 1;
+    static const int BASIC_ZOOM_LEVEL = (MAX_ZOOM_LEVEL + MIN_ZOOM_LEVEL) / 2;
 
     //The height displacement between two vertices when one is higher (normal zoom)
     static const int HEIGHT_INCREMENTS = 8;
@@ -45,13 +47,6 @@ class GraphicsModule {
     /*
      * Class variables
      */
-
-    //A Texture holding basic map tiles
-    sf::Texture m_maptile_tex;
-
-    //The container for the standard isometric tiles used
-    //the int key will be gotten from the basetile.hpp TileType
-    std::unordered_map<int, sf::Sprite> m_base_iso_tiles;
 
     //The main camera view for the screen; used for calculations
     CameraView m_main_camera;

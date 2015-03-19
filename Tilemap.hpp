@@ -14,6 +14,7 @@ class Tilemap : public sf::Drawable {
 
     sf::Vector2i m_map_dimensions;
 
+    void _sanitizeVerts(int _last_used_index);
     void draw(sf::RenderTarget &_target, sf::RenderStates _states) const;
 
 public:
