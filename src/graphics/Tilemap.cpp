@@ -4,8 +4,6 @@
 #include "Tilemap.hpp"
 #include "World.hpp"
 
-#include <iostream>
-
 Tilemap::Tilemap(int _x_world_dimension, int _y_world_dimension)
 {
     m_map_dimensions.x = 1024;
@@ -57,8 +55,6 @@ void Tilemap::load(const World &_game_world, const CameraView &_camera)
 
     int yTileStart = std::max(yTileTopLeft, 0);
     int yTileEnd   = std::min(y_size, static_cast<int>(yTileTopLeft + tilesFitOnscreen.y + tilesFitOnscreen.x + 6));
-
-    std::cout << (xTileEnd - xTileStart) * (yTileEnd - yTileStart) * 4 << " : " << 64*66*4 << std::endl;
 
     //Populate VertexArray with tiles from the world
     for (int i = xTileStart; i < xTileEnd; i++){
