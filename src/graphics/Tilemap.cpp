@@ -14,7 +14,7 @@ Tilemap::Tilemap(int _x_world_dimension, int _y_world_dimension)
     m_maptile_verts.setPrimitiveType(sf::Quads);
     m_maptile_verts.resize(64*66*4);
 
-    m_maptile_tex.loadFromFile("data/tiles_grass_3.png");
+    m_maptile_tex.loadFromFile("../data/tiles_grass_3.png");
 }
 
 void Tilemap::load(const World &_game_world, const CameraView &_camera)
@@ -121,27 +121,27 @@ void Tilemap::zoom(int _zoom_level)
 
     switch(_zoom_level) {
     case 1:
-        m_maptile_tex.loadFromFile("data/tiles_grass_1.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_1.png");
         m_maptile_verts.resize(244*246*4);
         break;
     case 2:
-        m_maptile_tex.loadFromFile("data/tiles_grass_2.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_2.png");
         m_maptile_verts.resize(124*126*4);
         break;
     case 3:
-        m_maptile_tex.loadFromFile("data/tiles_grass_3.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_3.png");
         m_maptile_verts.resize(64*66*4);
         break;
     case 4:
-        m_maptile_tex.loadFromFile("data/tiles_grass_4.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_4.png");
         m_maptile_verts.resize(34*36*4);
         break;
     case 5:
-        m_maptile_tex.loadFromFile("data/tiles_grass_5.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_5.png");
         m_maptile_verts.resize(19*21*4);
         break;
     default:
-        m_maptile_tex.loadFromFile("data/tiles_grass_3.png");
+        m_maptile_tex.loadFromFile("../data/tiles_grass_3.png");
         m_maptile_verts.resize(64*66*4);
         break;
 
