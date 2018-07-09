@@ -3,7 +3,7 @@ env = Environment()
 env.Append(LIBS = ["sfml-graphics","sfml-window","sfml-system"])
 env.Append(CPPPATH = "include")
 
-baseSources =  Glob('src/*.cpp')
+baseSources =  Glob('src/base/*.cpp')
 graphicsSources = Glob('src/graphics/*.cpp')
 worldSources = Glob('src/world/*.cpp')
 utilSources = Glob('src/util/*.cpp')
